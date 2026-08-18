@@ -19,7 +19,7 @@ function build(): HTMLDialogElement {
         <img class="added-pop-thumb" alt="" />
         <p class="added-pop-name"></p>
       </div>
-      <a class="added-pop-view" href="/cart.html"></a>
+      <a class="added-pop-view" href="${import.meta.env.BASE_URL}cart.html"></a>
       <button type="button" class="added-pop-continue" data-close>Continue Shopping</button>
     </div>`;
 

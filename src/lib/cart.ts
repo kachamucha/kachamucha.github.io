@@ -15,7 +15,7 @@ export const CATALOG: Record<string, Product> = {
   'issue-01': {
     id: 'issue-01',
     title: 'Issue 01  Befuzuli Sawaal',
-    cover: '/img/cover-3.webp',
+    cover: `${import.meta.env.BASE_URL}img/cover-3.webp`,
     coverAlt: 'Befuzuli Sawaal magazine cover',
     price: 900,
     compareAt: 1500

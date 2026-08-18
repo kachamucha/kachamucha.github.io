@@ -1,0 +1,366 @@
+/* ---------- issue product page: cover + themes left, copy + buy right ----------
+   Bright red canvas, yellow pills, black ink. Same brand tokens as the shop
+   slides so the page reads as part of the same set.
+
+   Everything is sized off the design frame (1824 x 1130) in a single unit,
+   --u, worth 1% of that frame's width. --u is the smaller of 1vw and
+   1.58vh, so the whole composition is capped by the viewport's height as
+   well as its width and the slide always fits on one screen without
+   scrolling. Change a size by changing its multiplier, not its unit. */
+
+:root {
+  --tag-green:  #45c04a;
+  --tag-blue:   #2b5cf5;
+  --tag-orange: #e8823c;
+}
+
+body:has(.issue-page) {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--kmk-red);
+  color: var(--kmk-ink);
+  font-family: var(--font-bricolage);
+  font-weight: 400;
+}
+
+/* the header lives in shop-nav.css, shared with the cart page */
+
+/* ---------- page shell: wide centre gutter, thin outer margins ---------- */
+.issue-page {
+  /* the 20px ceiling stops the design ballooning on very large monitors:
+     past ~1800px it stays put and the extra space reads as margin */
+  --u: min(1vw, 1.58vh, 20px);
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  padding: calc(2.2 * var(--u));
+}
+
+.issue-grid {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.11fr) minmax(0, 1fr);
+  column-gap: 16%;
+  row-gap: calc(2 * var(--u));
+  align-items: stretch;
+  max-width: calc(95.6 * var(--u));
+}
+
+.issue-left,
+.issue-right {
+  display: flex;
+  flex-direction: column;
+  gap: calc(2 * var(--u));
+  min-height: 0;
+}
+
+/* ---------- cover on the starburst ---------- */
+.issue-cover {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(30 * var(--u));
+}
+
+.issue-cover-star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(33 * var(--u));
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* slow clockwise spin behind the cover; the centering translate rides along
+   in the keyframes so it never fights the rotation */
+@keyframes issueStarSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .issue-cover-star {
+    animation: issueStarSpin 40s linear infinite;
+    will-change: transform;
+  }
+}
+
+.issue-cover-art {
+  position: relative;
+  width: calc(18.5 * var(--u));
+  height: auto;
+  transform: rotate(-4deg);
+  filter: drop-shadow(0 1.2rem 1.6rem rgb(0 0 0 / 0.35));
+}
+
+/* ---------- themes ---------- */
+.issue-themes {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.2 * var(--u));
+}
+
+.issue-themes-title,
+.issue-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.12em 0.62em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.issue-themes-title {
+  margin: 0;
+  background: var(--kmk-yellow);
+  color: var(--kmk-red);
+  font-weight: 800;
+  font-size: calc(1.75 * var(--u));
+}
+
+.issue-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(1.4 * var(--u)) calc(0.75 * var(--u));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.issue-tag {
+  font-weight: 400;
+  font-size: calc(1.75 * var(--u));
+  color: var(--kmk-ink);
+}
+
+.issue-tag-yellow { background: var(--kmk-yellow); }
+.issue-tag-green  { background: var(--tag-green); }
+.issue-tag-blue   { background: var(--tag-blue); }
+.issue-tag-orange { background: var(--tag-orange); }
+
+/* ---------- copy ---------- */
+.issue-intro {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.1 * var(--u));
+}
+
+.issue-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: calc(2.85 * var(--u));
+  line-height: 1.1;
+  color: var(--kmk-ink);
+}
+
+.issue-copy {
+  margin: 0;
+  font-weight: 400;
+  font-size: calc(1.53 * var(--u));
+  line-height: 1.27;
+  text-align: justify;
+  color: var(--kmk-ink);
+}
+
+/* ---------- buy block, pushed to the bottom of the right column ---------- */
+.issue-buy {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.3 * var(--u));
+}
+
+.issue-buy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: calc(1 * var(--u));
+}
+
+.issue-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(1.5 * var(--u));
+  background: var(--kmk-yellow);
+  border-radius: 999px;
+  padding: 0.12em calc(1.5 * var(--u));
+}
+
+.issue-qty-btn,
+.issue-qty-value {
+  font-family: inherit;
+  font-weight: 400;
+  font-size: calc(2.4 * var(--u));
+  line-height: 1.25;
+  color: var(--kmk-ink);
+}
+
+.issue-qty-btn {
+  background: none;
+  border: 0;
+  padding: 0 0.2rem;
+  cursor: pointer;
+  transition: scale 140ms ease, opacity 140ms ease;
+}
+
+.issue-qty-btn:hover:not(:disabled) {
+  scale: 1.25;
+}
+
+.issue-qty-btn:active:not(:disabled) {
+  scale: 0.9;
+}
+
+/* the number pops when it changes, so the count registers */
+.issue-qty-value.is-bumped {
+  animation: issueQtyBump 260ms ease-out;
+}
+
+@keyframes issueQtyBump {
+  0%   { scale: 1; }
+  40%  { scale: 1.28; }
+  100% { scale: 1; }
+}
+
+.issue-qty-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.issue-qty-value {
+  min-width: 1.6ch;
+  text-align: center;
+}
+
+.issue-price {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: calc(0.8 * var(--u));
+}
+
+.issue-price-now,
+.issue-price-was {
+  margin: 0;
+  background: var(--kmk-yellow);
+  border-radius: 999px;
+  padding: 0.12em 1.1em;
+  font-weight: 400;
+  font-size: calc(2.4 * var(--u));
+  line-height: 1.25;
+  text-align: center;
+  color: var(--kmk-ink);
+}
+
+.issue-price-was s {
+  text-decoration-color: var(--kmk-red);
+  text-decoration-thickness: 0.07em;
+}
+
+.issue-add {
+  width: 100%;
+  background: var(--kmk-yellow);
+  border: 0;
+  border-radius: 999px;
+  padding: 0.2em 1em;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: calc(2.96 * var(--u));
+  line-height: 1.25;
+  color: var(--kmk-ink);
+  cursor: pointer;
+  transition: translate 160ms ease, box-shadow 160ms ease, scale 100ms ease;
+}
+
+.issue-add:hover {
+  translate: 0 calc(-0.4 * var(--u));
+  box-shadow: 0 calc(0.8 * var(--u)) calc(1.4 * var(--u)) rgb(0 0 0 / 0.28);
+}
+
+.issue-add:active {
+  scale: 0.985;
+  translate: 0 0;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .issue-qty-value.is-bumped {
+    animation: none;
+  }
+}
+
+/* ---------- narrow screens: one column, height-led unit ----------
+   The two columns stack, so the height budget rules. --u is driven by
+   viewport height here, with a vw ceiling so it never outgrows the phone's
+   width, and a floor that keeps the paragraph readable. */
+@media (max-width: 860px) {
+  .issue-page {
+    /* the 7.2px floor keeps the paragraph at ~11px: below roughly 375x700
+       the slide would need unreadable type to stay on one screen, so it
+       scrolls a little instead */
+    --u: max(7.2px, min(2.55vw, 0.86vh));
+    padding: calc(2.2 * var(--u)) calc(3 * var(--u));
+  }
+
+  /* The reference orders the phone layout cover -> title -> copy -> buy ->
+     themes. `display: contents` dissolves the two column wrappers so their
+     children can be ordered directly. */
+  .issue-grid {
+    display: flex;
+    flex-direction: column;
+    gap: calc(1.8 * var(--u));
+    max-width: none;
+  }
+
+  .issue-left,
+  .issue-right {
+    display: contents;
+  }
+
+  .issue-cover  { order: 1; }
+  .issue-intro  { order: 2; }
+  .issue-buy    { order: 3; margin-top: 0; }
+  .issue-themes { order: 4; }
+
+  .issue-left,
+  .issue-right {
+    gap: calc(1.6 * var(--u));
+  }
+
+  .issue-cover {
+    min-height: calc(24 * var(--u));
+  }
+
+  .issue-cover-star { width: calc(26 * var(--u)); }
+  .issue-cover-art  { width: calc(14.5 * var(--u)); }
+
+  .issue-themes-title,
+  .issue-tag {
+    font-size: calc(1.65 * var(--u));
+  }
+
+  .issue-tags {
+    gap: calc(0.9 * var(--u)) calc(0.7 * var(--u));
+  }
+
+  .issue-title { font-size: calc(2.5 * var(--u)); }
+  .issue-copy  { font-size: calc(1.55 * var(--u)); text-align: left; }
+
+  .issue-buy       { gap: calc(1 * var(--u)); }
+  .issue-qty-btn,
+  .issue-qty-value,
+  .issue-price-now,
+  .issue-price-was { font-size: calc(2.1 * var(--u)); }
+  .issue-add       { font-size: calc(2.5 * var(--u)); }
+}

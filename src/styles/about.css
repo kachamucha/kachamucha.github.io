@@ -1,0 +1,246 @@
+/* ---------- about page: red eye rail + red header band + yellow body ----------
+   background structure only for now; title and copy land in a follow-up pass. */
+
+body:has(.about-page) {
+  background: var(--kmk-yellow);
+}
+
+.about-page {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+}
+
+/* narrow red rail running the full height, eyes rotated on their side so the
+   repeating column reads top-to-bottom instead of left-to-right. */
+.about-eye-rail {
+  position: relative;
+  flex: 0 0 clamp(6.5rem, 12vw, 10.5rem);
+  background: var(--kmk-red);
+  overflow: hidden;
+}
+
+.about-eye-rail::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300vh;
+  height: clamp(6.5rem, 12vw, 10.5rem);
+  transform: translate(-50%, -50%) rotate(90deg);
+  background-image: url('/img/eye.webp');
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: auto clamp(4.6rem, 7.5vw, 6.8rem);
+}
+
+.about-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* red header band carrying the "About Us" title */
+.about-top-band {
+  flex: 0 0 auto;
+  min-height: clamp(6rem, 13vh, 9.5rem);
+  display: flex;
+  align-items: center;
+  background: var(--kmk-red);
+  padding: 0 clamp(2.2rem, 5vw, 4.5rem);
+}
+
+.about-title {
+  margin: 0;
+  width: clamp(19rem, 44vw, 36rem);
+  line-height: 0;
+}
+
+.about-title img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* yellow body; the copy and founder section land here next */
+.about-body {
+  flex: 1 1 auto;
+  background: var(--kmk-yellow);
+}
+
+.about-copy {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.8rem, 3.4vh, 2.6rem);
+  width: 100%;
+  padding: clamp(1.8rem, 4vh, 3.2rem) clamp(2.2rem, 5vw, 4.5rem);
+}
+
+.about-block h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-bricolage);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+  line-height: 1.25;
+  color: var(--kmk-ink);
+}
+
+.about-block p {
+  margin: 0;
+  font-family: var(--font-bricolage);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 1.75vw, 1.55rem);
+  line-height: 1.5;
+  color: var(--kmk-ink);
+}
+
+.about-credits-intro {
+  margin-top: -0.3rem;
+}
+
+/* founder section: copy on the left, photo anchored bottom-right, same
+   heading/body type as the rest of the page copy above it. */
+.about-founder {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding: 0 clamp(2.2rem, 5vw, 4.5rem) clamp(1.8rem, 4vh, 3.2rem);
+}
+
+.about-founder-copy {
+  flex: 1 1 55%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 2vh, 1.6rem);
+  min-width: 20rem;
+}
+
+.about-founder-copy h3 {
+  margin: 0;
+  font-family: var(--font-bricolage);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+  line-height: 1.25;
+  color: var(--kmk-ink);
+}
+
+.about-founder-copy p {
+  margin: 0;
+  font-family: var(--font-bricolage);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 1.75vw, 1.55rem);
+  line-height: 1.5;
+  color: var(--kmk-ink);
+}
+
+.about-founder-photo {
+  flex: 0 1 38%;
+  align-self: flex-end;
+  min-width: 16rem;
+  transform: translateY(clamp(1.5rem, 4vh, 3rem));
+}
+
+.about-founder-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about-credits-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.2rem clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 1rem;
+}
+
+.about-credits-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+@media (max-width: 640px) {
+  .about-credits-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- scroll reveals ----------
+   The page was entirely static. Blocks lift in as they come into view, driven
+   by a class from about.ts so nothing is hidden if the script never runs. */
+@media (prefers-reduced-motion: no-preference) {
+  .about-reveal {
+    opacity: 0;
+    translate: 0 1.6rem;
+    transition: opacity 620ms ease, translate 620ms cubic-bezier(0.2, 0.8, 0.3, 1);
+  }
+
+  .about-reveal.is-in {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ---------- MOBILE ----------------------------------------------------
+   The desktop page is a fixed eye rail beside a flexible column. On a phone
+   the rail has to shrink and the founder block must be allowed to go narrow:
+   its 20rem minimum plus the rail was 104px wider than the screen. */
+@media (max-width: 720px) {
+  .about-eye-rail {
+    flex: 0 0 2.6rem;
+  }
+
+  .about-eye-rail::before {
+    height: 2.6rem;
+    background-size: auto 2.1rem;
+  }
+
+  .about-content {
+    min-width: 0;
+  }
+
+  .about-top-band {
+    min-height: 4.4rem;
+    padding: 0 4vw;
+  }
+
+  .about-title {
+    width: 62vw;
+  }
+
+  .about-copy {
+    gap: 1.4rem;
+    padding: 1.6rem 4vw;
+  }
+
+  .about-block h3,
+  .about-founder-copy h3 {
+    font-size: 1.25rem;
+  }
+
+  .about-block p,
+  .about-founder-copy p {
+    font-size: 0.95rem;
+  }
+
+  .about-founder {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.2rem;
+    padding: 0 4vw 1.6rem;
+  }
+
+  .about-founder-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .about-founder-photo {
+    min-width: 0;
+    width: 62vw;
+    align-self: flex-end;
+    transform: none;
+  }
+}

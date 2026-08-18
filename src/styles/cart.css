@@ -1,0 +1,399 @@
+/* ---------- cart page: yellow sheet, ruled rows, red checkout ----------
+   Sized off the design frame (1740 x 968) on the same dual-axis unit as the
+   issue page: --u is 1% of the frame width, capped by viewport height so the
+   sheet always fits one screen. */
+
+/* the empty state and summary toggle via [hidden]; without this the
+   display:flex below would beat the UA's [hidden] rule and keep them visible */
+.cart-page [hidden] {
+  display: none;
+}
+
+body:has(.cart-page) {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--kmk-yellow);
+  color: var(--kmk-ink);
+  font-family: var(--font-bricolage);
+  font-weight: 400;
+}
+
+.cart-page {
+  --u: min(1vw, 1.75vh, 20px);
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  padding: calc(3.5 * var(--u)) calc(2.3 * var(--u)) calc(2.6 * var(--u));
+}
+
+.cart-inner {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(95.4 * var(--u));
+}
+
+/* ---------- title row ---------- */
+.cart-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(2 * var(--u));
+  padding-bottom: calc(1.8 * var(--u));
+}
+
+.cart-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: calc(2.76 * var(--u));
+  line-height: 1.1;
+}
+
+.cart-continue {
+  font-size: calc(1.4 * var(--u));
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  white-space: nowrap;
+  transition: text-underline-offset 160ms ease, opacity 160ms ease;
+}
+
+.cart-continue:hover {
+  text-underline-offset: 0.32em;
+  opacity: 0.7;
+}
+
+/* ---------- ruled table ---------- */
+.cart-head,
+.cart-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(16 * var(--u)) calc(12 * var(--u));
+  align-items: center;
+  gap: calc(2 * var(--u));
+  border-top: 2px solid var(--kmk-ink);
+  padding: calc(0.9 * var(--u)) 0;
+}
+
+.cart-lines .cart-item:last-child {
+  border-bottom: 2px solid var(--kmk-ink);
+}
+
+.cart-head {
+  font-size: calc(1.32 * var(--u));
+}
+
+.cart-head span:nth-child(2) { text-align: center; }
+.cart-head span:nth-child(3) { text-align: right; }
+
+.cart-item {
+  padding: calc(2 * var(--u)) 0;
+}
+
+/* product cell: cover thumb + title */
+.cart-product {
+  display: flex;
+  align-items: center;
+  gap: calc(2.6 * var(--u));
+  min-width: 0;
+}
+
+.cart-thumb {
+  flex: 0 0 auto;
+  width: calc(6 * var(--u));
+  height: auto;
+}
+
+.cart-name {
+  margin: 0;
+  font-size: calc(1.55 * var(--u));
+  line-height: 1.2;
+}
+
+/* quantity cell: stepper + remove */
+.cart-qty-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(1.4 * var(--u));
+}
+
+.cart-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(1 * var(--u));
+  background: var(--kmk-yellow);
+  border: 2px solid var(--kmk-ink);
+  border-radius: 999px;
+  padding: 0.1em calc(0.9 * var(--u));
+}
+
+.cart-qty-btn,
+.cart-qty-value {
+  font-family: inherit;
+  font-weight: 400;
+  font-size: calc(1.15 * var(--u));
+  line-height: 1.4;
+  color: var(--kmk-ink);
+}
+
+.cart-qty-btn {
+  background: none;
+  border: 0;
+  padding: 0 0.25rem;
+  cursor: pointer;
+  transition: scale 140ms ease;
+}
+
+.cart-qty-btn:hover:not(:disabled) { scale: 1.3; }
+.cart-qty-btn:active:not(:disabled) { scale: 0.9; }
+.cart-qty-btn:disabled { opacity: 0.35; cursor: default; }
+
+.cart-qty-value {
+  min-width: 1.6ch;
+  text-align: center;
+}
+
+.cart-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  padding: calc(0.2 * var(--u));
+  color: var(--kmk-ink);
+  cursor: pointer;
+  transition: color 160ms ease, rotate 220ms ease, scale 160ms ease;
+}
+
+/* the bin leans and turns red before you commit to it */
+.cart-remove:hover {
+  color: var(--kmk-red);
+  rotate: -12deg;
+  scale: 1.1;
+}
+
+.cart-remove:active {
+  scale: 0.92;
+}
+
+/* the row collapses out of the sheet instead of vanishing */
+.cart-item {
+  transition: opacity 260ms ease, translate 260ms ease;
+}
+
+.cart-item.is-leaving {
+  opacity: 0;
+  translate: calc(-4 * var(--u)) 0;
+}
+
+.cart-remove svg {
+  width: calc(1.8 * var(--u));
+  height: auto;
+}
+
+/* total cell: struck compare-at over the real price */
+.cart-line-total {
+  text-align: right;
+  font-size: calc(1.72 * var(--u));
+  line-height: 1.25;
+}
+
+.cart-line-was {
+  display: block;
+  text-decoration: line-through;
+  text-decoration-color: var(--kmk-red);
+  text-decoration-thickness: 0.07em;
+}
+
+/* ---------- empty state ---------- */
+.cart-empty {
+  padding: calc(4 * var(--u)) 0;
+  font-size: calc(1.55 * var(--u));
+  border-bottom: 2px solid var(--kmk-ink);
+}
+
+/* ---------- summary: sits at the bottom of the sheet ---------- */
+.cart-summary {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(0.9 * var(--u));
+  padding-top: calc(3 * var(--u));
+  text-align: right;
+}
+
+.cart-subtotal,
+.cart-shipping {
+  margin: 0;
+  font-weight: 800;
+  font-size: calc(1.6 * var(--u));
+  line-height: 1.3;
+}
+
+.cart-checkout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(1.2 * var(--u));
+  min-width: calc(31 * var(--u));
+  background: var(--kmk-red);
+  border: 0;
+  border-radius: 999px;
+  padding: 0.28em 1em;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: calc(2.5 * var(--u));
+  line-height: 1.25;
+  color: var(--kmk-ink);
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: translate 160ms ease, box-shadow 160ms ease, scale 100ms ease;
+}
+
+.cart-checkout:hover {
+  translate: 0 calc(-0.4 * var(--u));
+  box-shadow: 0 calc(0.8 * var(--u)) calc(1.4 * var(--u)) rgb(0 0 0 / 0.3);
+}
+
+.cart-checkout:active {
+  scale: 0.985;
+  translate: 0 0;
+  box-shadow: none;
+}
+
+/* the subtotal ticks when the basket changes */
+.cart-subtotal.is-bumped {
+  animation: cartTotalBump 300ms ease-out;
+}
+
+@keyframes cartTotalBump {
+  0%   { scale: 1; }
+  40%  { scale: 1.06; }
+  100% { scale: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-item,
+  .cart-remove,
+  .cart-checkout,
+  .cart-qty-btn { transition: none; }
+  .cart-subtotal.is-bumped { animation: none; }
+}
+
+/* ---------- narrow screens: stacked rows, height-led unit ---------- */
+@media (max-width: 720px) {
+  .cart-page {
+    --u: max(1vh, min(3.6vw, 1.5vh));
+    padding: calc(3 * var(--u)) calc(3 * var(--u));
+  }
+
+  .cart-inner {
+    max-width: none;
+  }
+
+  .cart-head {
+    display: none;
+  }
+
+  .cart-title {
+    font-size: calc(2.4 * var(--u));
+    white-space: nowrap;
+  }
+
+  .cart-continue {
+    font-size: calc(1.3 * var(--u));
+  }
+
+  /* The phone reference keeps all three columns on one row — thumbnail and
+     name, then the stepper, then the total. That mock is drawn wider than a
+     390px phone, where three columns leave the product name about 60px and
+     unreadable, so the row only stays three-up from 430px and stacks below. */
+  .cart-inner {
+    min-width: 0;
+  }
+
+  /* below 430px the row stacks, so a three-column header aligns with
+     nothing — it comes back with the three-up row further down */
+  .cart-head {
+    display: none;
+  }
+
+  .cart-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: calc(1.2 * var(--u));
+    gap: calc(1 * var(--u));
+    padding: calc(1.4 * var(--u)) 0;
+  }
+
+  .cart-product {
+    grid-column: 1 / -1;
+    gap: calc(1.6 * var(--u));
+  }
+
+  .cart-thumb {
+    width: calc(7 * var(--u));
+  }
+
+  .cart-name {
+    font-size: calc(1.6 * var(--u));
+  }
+
+  .cart-qty-cell {
+    justify-content: flex-start;
+    grid-column: 1;
+  }
+
+  .cart-line-total {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: calc(1.5 * var(--u));
+  }
+
+  /* The bin is not in the reference, but the stepper stops at 1, so dropping
+     it would leave no way to remove a line on a phone. Kept, just small. */
+  .cart-remove svg {
+    width: calc(2.2 * var(--u));
+  }
+
+  .cart-qty-btn,
+  .cart-qty-value { font-size: calc(1.5 * var(--u)); }
+
+  .cart-remove svg { width: calc(2.4 * var(--u)); }
+
+  .cart-checkout {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ---------- 430px and up: the reference's three-column row fits ---------- */
+@media (min-width: 430px) and (max-width: 720px) {
+  /* auto columns rather than fixed ones: the stepper and the total take
+     exactly what they need and the product name keeps the rest, so the row
+     can never add up to more than the sheet */
+  .cart-head,
+  .cart-item {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .cart-head {
+    display: grid;
+    font-size: calc(1 * var(--u));
+  }
+
+  .cart-item {
+    row-gap: 0;
+  }
+
+  .cart-qty-btn,
+  .cart-qty-value { font-size: calc(1.15 * var(--u)); }
+
+  .cart-line-total { font-size: calc(1.25 * var(--u)); }
+
+  .cart-product    { grid-column: 1; grid-row: 1; }
+  .cart-qty-cell   { grid-column: 2; grid-row: 1; justify-content: center; }
+  .cart-line-total { grid-column: 3; grid-row: 1; }
+}

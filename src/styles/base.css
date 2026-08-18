@@ -1,0 +1,82 @@
+/* ---------- tokens ---------- */
+:root {
+  --bg:       #0a0708;
+  --bg-blood: #2b0505;
+  --accent:   #b21414;
+  --text:     #f4f1ee;
+
+  /* Kacha Mucha brand red — normalized to #FF0000 so every red across the
+     site (nav bar, shop slides, brand slide, about page) reads as the same
+     exact tone. Yellow is the bright lemon sampled off Asset 3 (the sunburst). */
+  --kmk-red:    #ff0000;
+  --kmk-yellow: #fdfa00;
+  --kmk-ink:    #0a0708;
+
+  --font-display: "Helvetica Neue", Helvetica, Arial, "Segoe UI", sans-serif;
+  --font-bricolage: "Bricolage Grotesque", var(--font-display);
+  --font-alfarn: "Alfarn", "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ---------- reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-display);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- lenis ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

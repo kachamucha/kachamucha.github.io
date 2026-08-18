@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Case No. EDU/PM/0001/2026. A forensic post-mortem of curiosity in the education system." />
+    <meta name="theme-color" content="#0a0708" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="135x135" href="/img/favicon.png" />
+    <!-- Preload the two images the hero animation needs immediately -->
+    <link rel="preload" as="image" href="/img/hand.webp" />
+    <link rel="preload" as="image" href="/img/blood.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;500;800&display=swap" rel="stylesheet" />
+    <!-- critical: hide the blood art from the first paint so it never flashes
+         at top-left before the main stylesheet/JS loads (Vite injects CSS async in dev) -->
+    <style>
+      .hero-burst,
+      .hero-trail-mark,
+      .hero-statement {
+        opacity: 0;
+      }
+    </style>
+    <title>Kacha Mucha</title>
+  </head>
+  <body>
+    <main id="report">
+
+      <!-- ACT ONE: the murder → the case file. ONE red bulb per side runs
+           continuously behind all three slides (strike, verdict, report),
+           masked so it's faint at the strike, strong at the verdict, and fades
+           out into the report — no per-slide seams. -->
+      <div class="act-one">
+        <img class="act-glow act-glow-left" src="/img/red-bulb.webp" alt="" aria-hidden="true" fetchpriority="high" />
+        <img class="act-glow act-glow-right" src="/img/red-bulb.webp" alt="" aria-hidden="true" fetchpriority="high" />
+
+      <!-- 1. HERO — pure black; the hand+knife strikes and the blood bursts.
+           The whole section scrolls normally (no pin): the strike scene sits in
+           the first screen, the verdict follows below on the rising red. -->
+      <section id="hero" class="hero" data-section="hero" aria-label="Case opening">
+        <div class="hero-scene" aria-hidden="true">
+          <div class="hero-blood-field">
+            <img class="hero-burst" src="/img/blood.webp" alt="" fetchpriority="high" />
+          </div>
+          <!-- spatter flecks: positioned/animated entirely by heroStrike.ts, thrown from the impact point a beat after the pool blooms -->
+          <div class="hero-trail">
+            <img class="hero-trail-mark" src="/img/blood.webp" alt="" />
+            <img class="hero-trail-mark" src="/img/blood.webp" alt="" />
+            <img class="hero-trail-mark" src="/img/blood.webp" alt="" />
+            <img class="hero-trail-mark" src="/img/blood.webp" alt="" />
+            <img class="hero-trail-mark" src="/img/blood.webp" alt="" />
+          </div>
+          <div class="hero-hand-anchor">
+            <img class="hero-hand" src="/img/hand.webp" alt="" fetchpriority="high" />
+          </div>
+        </div>
+        <!-- the verdict — the second slide, lit by the continuous act-one bulb.
+             Mobile shows the "cold blodded murder" image on its own instead of
+             this paragraph — see .hero-statement-text / .hero-statement-img in
+             the mobile media query in layout.css. -->
+        <div class="hero-statement">
+          <p class="hero-statement-text">
+            <span class="hero-statement-line">There's been a <span class="hero-statement-emph"><span class="hero-nobreak">cold-blooded</span> murder</span></span>
+            <span class="hero-statement-line">of curiosity</span>
+            <span class="hero-statement-line">in <span class="hero-nobreak">the education system!</span></span>
+          </p>
+          <img class="hero-statement-img" src="/img/cold%20blodded%20murder_.webp" alt="There's been a cold-blooded murder of curiosity in the education system!" loading="lazy" />
+        </div>
+      </section>
+
+      <!-- 2. CASE FILE — continues the hero's oversized edge ovals -->
+      <section id="section3" class="section3" data-section="section3" aria-label="Autopsy report">
+        <div class="s3-stage">
+          <button type="button" class="s3-card s3-card-1" data-full="/img/autopsy-report-1.webp" aria-label="Open autopsy report, page 1, full size">
+            <img src="/img/autopsy-report-1.webp" alt="Autopsy report, page 1" loading="lazy" />
+            <span class="s3-sheen" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="s3-card s3-card-2" data-full="/img/autopsy-report-2.webp" aria-label="Open autopsy report, page 2, full size">
+            <img src="/img/autopsy-report-2.webp" alt="Autopsy report, page 2" loading="lazy" />
+            <span class="s3-sheen" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="s3-lightbox" aria-hidden="true">
+          <div class="s3-lightbox-backdrop" data-close></div>
+          <div class="s3-lightbox-panel" role="dialog" aria-modal="true" aria-label="Full-size report page">
+            <button type="button" class="s3-lightbox-close" data-close aria-label="Close full-size report">&times;</button>
+            <img class="s3-lightbox-img" src="" alt="" aria-hidden="true" />
+          </div>
+        </div>
+      </section>
+      </div>
+      <!-- end ACT ONE -->
+
+      <!-- 3. CLOSING -->
+      <section id="closing" class="closing" data-section="closing" aria-label="Closing">
+        <div class="closing-glow" aria-hidden="true"></div>
+        <p class="closing-text"><span>Only one way</span><span>to bring the</span><span>dead back !</span></p>
+      </section>
+
+      <!-- 4. OUIJA — the answer, fit to screen on clean black -->
+      <section id="ouija" class="ouija" data-section="ouija" aria-label="Ouija board">
+        <img class="ouija-img" src="/img/ouija-board.webp" alt="A Ouija board with two people's hands resting on the planchette" loading="lazy" />
+      </section>
+
+      <!-- 5. REINCARNATION — the revival line under a red bulb of light -->
+      <section id="reincarnation" class="reincarnation" data-section="reincarnation" aria-label="Reincarnation">
+        <img class="reincarnation-glow" src="/img/reincarnation-glow.webp" alt="" aria-hidden="true" loading="lazy" />
+        <p class="reincarnation-text">
+          <span class="reincarnation-line">Witness the</span>
+          <span class="reincarnation-line">Reincarnation</span>
+          <span class="reincarnation-line">of Curiosity!</span>
+        </p>
+      </section>
+
+      <!-- 6. BRAND — the revival: Kacha Mucha identity on the sunburst.
+           This is the site's homepage slide. The nav below is wrapped around
+           it and everything after so it can stick to the top of the viewport
+           through the rest of the scroll, but stays absent on every slide
+           before this one (reincarnation and earlier). -->
+      <div class="site-home-scope">
+        <header class="brand-nav">
+          <a class="brand-logo" href="#brand" aria-label="Kacha Mucha home">
+            <img src="/img/eye-logo.webp" alt="Kacha Mucha eye logo" loading="lazy" />
+          </a>
+          <nav class="brand-links" aria-label="Primary">
+            <a href="#brand">Home</a>
+            <a href="/about.html">About Us</a>
+            <a href="#befuzuli">Shop</a>
+            <a href="#collaborations">Collaborations</a>
+            <img class="brand-logo-kmk" src="/img/kmk-monogram.webp" alt="KMK monogram" loading="lazy" />
+          </nav>
+        </header>
+
+        <section id="brand" class="brand" data-section="brand" aria-label="Kacha Mucha">
+          <div class="brand-hero">
+            <h2 class="brand-title">
+              <img src="/img/kacha-mucha-text.webp" alt="Kacha Mucha" loading="lazy" />
+            </h2>
+          </div>
+          <div class="brand-photo">
+            <img src="/img/schoolgirl-photo.webp" alt="A schoolgirl reading a Kacha Mucha catalogue under a tree in a school courtyard" loading="lazy" />
+          </div>
+          <div class="brand-tagline" role="note" aria-label="Brand statement">
+            <img src="/img/visually-appetizing-magazines.webp" alt="Visually appetizing magazines" loading="lazy" />
+          </div>
+        </section>
+
+        <!-- 7. SHOP — bestseller issues on the bright red canvas -->
+        <section id="shop" class="shop" data-section="shop" aria-label="Shop red slide 1">
+          <div class="shop-stage">
+            <a class="shop-item shop-item-left" href="/issue-01.html" aria-label="September 2026 issue, coming soon. Go to the shop">
+              <img class="shop-star" src="/img/star.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="shop-cover shop-cover-left" src="/img/cover-1.webp" alt="September 2026 magazine issue" loading="lazy" />
+              <span class="shop-label">
+                <span class="shop-label-month">September 2026 issue</span>
+                <span class="shop-label-status">Coming soon</span>
+              </span>
+            </a>
+            <a class="shop-item shop-item-center" href="/issue-01.html" aria-label="October 2026 issue, coming soon. Go to the shop">
+              <img class="shop-star" src="/img/star.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="shop-cover shop-cover-center" src="/img/cover-2.webp" alt="October 2026 magazine issue" loading="lazy" />
+              <span class="shop-label">
+                <span class="shop-label-month">October 2026 issue</span>
+                <span class="shop-label-status">Coming soon</span>
+              </span>
+            </a>
+            <a class="shop-item shop-item-right" href="/issue-01.html" aria-label="August 2026 issue, out now. View the issue">
+              <img class="shop-star" src="/img/star.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="shop-cover shop-cover-right" src="/img/cover-3.webp" alt="August 2026 magazine issue, Befuzuli Sawaal" loading="lazy" />
+              <span class="shop-label shop-label-live">
+                <span class="shop-label-month">August 2026 issue</span>
+                <span class="shop-label-status">OUT NOW</span>
+              </span>
+            </a>
+            <img class="shop-eye" src="/img/eye.webp" alt="Eye emblem" loading="lazy" />
+            <div class="shop-yellow-box-bottom" aria-hidden="true"></div>
+            <div class="shop-yellow-box-bottom-eyes" aria-hidden="true"></div>
+          </div>
+
+          <!-- Merged in from the old #shop-2: the sticker cluster and the tilted
+               spread mosaic now live on this same red canvas so nothing is split
+               across a slide boundary and every element shares one coordinate space. -->
+          <div class="shop-mosaic" data-section="mosaic">
+          <img class="mosaic-tile mosaic-sticker-warning" src="/img/sticker-warning.webp" alt="Warning sticker: may disrupt dinner table conversations" loading="lazy" />
+          <img class="mosaic-tile mosaic-sticker-caution" src="/img/sticker-caution.webp" alt="" aria-hidden="true" loading="lazy" />
+          <img class="mosaic-tile mosaic-sticker-care" src="/img/sticker-handle-with-care.webp" alt="Please handle with care: challenges societal norms sticker" loading="lazy" />
+          <img class="mosaic-tile mosaic-sticker-parental" src="/img/sticker-parental-advisory.webp" alt="Parental advisory: may trigger independent thought sticker" loading="lazy" />
+          <img class="mosaic-tile mosaic-sticker-caution-2" src="/img/sticker-caution.webp" alt="" aria-hidden="true" loading="lazy" />
+          <!-- Phone-only: a single flat artwork of the whole spread collage
+               replaces the individual spread tiles + stickers on mobile. -->
+          <img class="mosaic-flat" src="/img/Layer-21.webp" alt="A collage of magazine spreads from inside the Kacha Mucha issues" loading="lazy" />
+          <!-- The spreads sit on three parallel diagonals. Each diagonal is a
+               row that loops along its own axis, alternating direction, and
+               carries a duplicate set one full row-length behind it so the
+               loop closes seamlessly. -->
+          <!-- diagonal A: travels up along its own axis -->
+          <div class="mosaic-row mosaic-row-up">
+            <div class="mosaic-set">
+              <img class="mosaic-tile mosaic-spread-3" src="/img/spread-3.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-2" src="/img/spread-2.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-1" src="/img/spread-1.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+            <div class="mosaic-set mosaic-set-clone">
+              <img class="mosaic-tile mosaic-spread-3" src="/img/spread-3.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-2" src="/img/spread-2.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-1" src="/img/spread-1.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+          </div>
+          <!-- diagonal B: travels down along its own axis -->
+          <div class="mosaic-row mosaic-row-down">
+            <div class="mosaic-set">
+              <img class="mosaic-tile mosaic-spread-6" src="/img/spread-6.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-5" src="/img/spread-5.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-7" src="/img/spread-7.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+            <div class="mosaic-set mosaic-set-clone">
+              <img class="mosaic-tile mosaic-spread-6" src="/img/spread-6.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-5" src="/img/spread-5.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-7" src="/img/spread-7.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+          </div>
+          <!-- diagonal C: travels up along its own axis -->
+          <div class="mosaic-row mosaic-row-up">
+            <div class="mosaic-set">
+              <img class="mosaic-tile mosaic-spread-8" src="/img/spread-8.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-10" src="/img/spread-10.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-4" src="/img/spread-4.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+            <div class="mosaic-set mosaic-set-clone">
+              <img class="mosaic-tile mosaic-spread-8" src="/img/spread-8.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-10" src="/img/spread-10.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-4" src="/img/spread-4.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+          </div>
+          <!-- diagonal D: two books travelling down-left -->
+          <div class="mosaic-row mosaic-row-down mosaic-row-pair">
+            <div class="mosaic-set">
+              <img class="mosaic-tile mosaic-spread-11" src="/img/spread-11.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-9" src="/img/spread-9.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+            <div class="mosaic-set mosaic-set-clone">
+              <img class="mosaic-tile mosaic-spread-11" src="/img/spread-11.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="mosaic-tile mosaic-spread-9" src="/img/spread-9.webp" alt="" aria-hidden="true" loading="lazy" />
+            </div>
+          </div>
+
+          </div>
+        </section>
+
+        <!-- 7b. BEFUZULI SAWAAL MAG — the flagship issue, promoted before the footer -->
+        <section id="befuzuli" class="befuzuli-slide" data-section="befuzuli" aria-label="Befuzuli Sawaal Mag">
+          <img class="befuzuli-awning" src="/img/top-awning.webp" alt="" aria-hidden="true" loading="lazy" />
+          <div class="befuzuli-body">
+            <div class="befuzuli-cover">
+              <img class="befuzuli-star" src="/img/star.webp" alt="" aria-hidden="true" loading="lazy" />
+              <img class="befuzuli-cover-art" src="/img/cover-3.webp" alt="Befuzuli Sawaal magazine cover" loading="lazy" />
+            </div>
+            <div class="befuzuli-content">
+              <img class="befuzuli-title" src="/img/befuzuli-sawaal-mag-text.webp" alt="Befuzuli Sawaal Mag" loading="lazy" />
+              <div class="befuzuli-actions">
+                <a class="befuzuli-cta" href="/issue-01.html">Get Issue 1</a>
+                <a class="befuzuli-cta befuzuli-cta-alt" href="/about.html">About Us</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. COLLABORATIONS — footer: refund policy + contact, closes the scroll -->
+        <section id="collaborations" class="collab-page" aria-label="Collaborations">
+          <div class="collab-content">
+            <section class="collab-block">
+              <h3>Cancellation/Refund Policy</h3>
+              <p>Refunds and cancellations are reviewed on a case-by-case basis; please contact us if you experience any issues with your purchase.</p>
+            </section>
+
+            <section class="collab-block">
+              <h3>We'd love to hear from you !</h3>
+              <p>To volunteer to write or design the mag<br />E-mail : kachamuchaofficial@gmail.com</p>
+              <p>To advertise your service/ product on the mag, <span class="collab-nowrap">contact : +91 98 405 26 333</span></p>
+            </section>
+          </div>
+
+          <div class="collab-eye">
+            <img src="/img/eye.webp" alt="" aria-hidden="true" loading="lazy" />
+            <p class="collab-copyright">© Kacha Mucha Kollective</p>
+          </div>
+        </section>
+      </div>
+
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

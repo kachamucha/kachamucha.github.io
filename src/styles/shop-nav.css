@@ -1,0 +1,107 @@
+/* ---------- shop header: shared by the issue page and the cart ----------
+   Red band, optional KMK monogram on the left, cart + home on the right,
+   closed by a hard black rule. Scales on the same dual-axis unit as the
+   pages below it so a short viewport shrinks the header too. */
+
+.shop-nav {
+  --u: min(1vw, 1.58vh);
+  display: flex;
+  align-items: center;
+  gap: calc(1.8 * var(--u));
+  padding: calc(1.1 * var(--u)) calc(2.2 * var(--u));
+  border-bottom: 3px solid var(--kmk-ink);
+  background: var(--kmk-red);
+}
+
+.shop-nav-logo {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.shop-nav-logo img {
+  height: calc(3.4 * var(--u));
+  width: auto;
+}
+
+/* pushes the icons right whether or not a logo is present */
+.shop-nav-icons {
+  display: flex;
+  align-items: center;
+  gap: calc(1.8 * var(--u));
+  margin-left: auto;
+}
+
+.shop-nav-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--kmk-ink);
+  text-decoration: none;
+}
+
+.shop-nav-icon svg {
+  width: calc(3.4 * var(--u));
+  height: auto;
+}
+
+/* count badge only appears once something has been added */
+.shop-cart-count {
+  position: absolute;
+  top: calc(-0.6 * var(--u));
+  right: calc(-0.8 * var(--u));
+  min-width: calc(1.5 * var(--u));
+  padding: 0 calc(0.3 * var(--u));
+  border-radius: 999px;
+  background: var(--kmk-yellow);
+  border: 2px solid var(--kmk-ink);
+  font-family: var(--font-bricolage);
+  font-size: calc(1.1 * var(--u));
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--kmk-ink);
+}
+
+/* the badge kicks when the count changes, so an add always registers */
+.shop-cart-count.is-bumped {
+  animation: cartBadgeBump 380ms cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+
+@keyframes cartBadgeBump {
+  0%   { scale: 1; }
+  35%  { scale: 1.55; }
+  100% { scale: 1; }
+}
+
+.shop-nav-icon svg {
+  transition: scale 160ms ease;
+}
+
+.shop-nav-icon:hover svg {
+  scale: 1.12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-cart-count.is-bumped { animation: none; }
+  .shop-nav-icon svg { transition: none; }
+}
+
+/* narrow screens: the pages switch to a height-led unit, so does the bar */
+@media (max-width: 860px) {
+  .shop-nav {
+    --u: max(0.9vh, min(2.55vw, 1.2vh));
+    padding: calc(1.4 * var(--u)) calc(2.4 * var(--u));
+  }
+
+  .shop-nav-logo img,
+  .shop-nav-icon svg {
+    height: auto;
+    width: calc(3.6 * var(--u));
+  }
+
+  .shop-nav-logo img {
+    height: calc(3.6 * var(--u));
+    width: auto;
+  }
+}

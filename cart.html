@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Your Kacha Mucha cart." />
+    <meta name="theme-color" content="#ff0000" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="135x135" href="/img/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;800&display=swap" rel="stylesheet" />
+    <title>Your Cart — Kacha Mucha</title>
+  </head>
+  <body>
+    <header class="shop-nav">
+      <a class="shop-nav-logo" href="/#brand" aria-label="Kacha Mucha home">
+        <img src="/img/kmk-monogram.webp" alt="KMK monogram" />
+      </a>
+      <div class="shop-nav-icons">
+        <a class="shop-nav-icon" href="/cart.html" aria-current="page" aria-label="Cart">
+          <svg viewBox="0 0 32 30" aria-hidden="true" focusable="false">
+            <path d="M1 2h5l5.2 17.5h15.4L31 6.5H8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="13" cy="26" r="2.8" fill="none" stroke="currentColor" stroke-width="2.4" />
+            <circle cx="25" cy="26" r="2.8" fill="none" stroke="currentColor" stroke-width="2.4" />
+          </svg>
+          <span class="shop-cart-count" data-cart-count hidden>0</span>
+        </a>
+        <a class="shop-nav-icon" href="/#brand" aria-label="Kacha Mucha home">
+          <svg viewBox="0 0 32 30" aria-hidden="true" focusable="false">
+            <path d="M2 14 16 2l14 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5.5 12.5V28h21V12.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13 28v-8.5h6V28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <main class="cart-page">
+      <div class="cart-inner">
+        <div class="cart-top">
+          <h1 class="cart-title">Your Cart</h1>
+          <a class="cart-continue" href="/issue-01.html">Continue Shopping</a>
+        </div>
+
+        <div class="cart-head" aria-hidden="true">
+          <span>Product</span>
+          <span>Quantity</span>
+          <span>Total</span>
+        </div>
+
+        <!-- rows rendered from localStorage by src/cart.ts -->
+        <div class="cart-lines" data-cart-lines></div>
+
+        <p class="cart-empty" data-cart-empty hidden>Your cart is empty.</p>
+
+        <div class="cart-summary" data-cart-summary hidden>
+          <p class="cart-subtotal">Subtotal&nbsp; <span data-cart-subtotal>₹ 0.0</span></p>
+          <p class="cart-shipping">Shipping calculated at checkout</p>
+          <a class="cart-checkout" href="https://forms.gle/RGBTcd7h6QCLqoQU8">Self-Checkout</a>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="/src/cart.ts"></script>
+  </body>
+</html>

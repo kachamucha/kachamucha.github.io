@@ -1,0 +1,2006 @@
+/* section layouts — rebuilt from scratch, one block per section as it lands */
+
+/* the homepage opens on black, so its page-transition veil is black too */
+body:has(#report) {
+  --veil: var(--bg);
+}
+
+/* ---------- act one: one continuous red bulb behind slides 1-3 ----------
+   #hero (strike + verdict) and #section3 (report) are wrapped in .act-one so a
+   single red bulb per side can span all three slides, instead of six separate
+   placements. The slides themselves are transparent; act-one carries the black
+   base and the bulb sits behind their content. */
+.act-one {
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.act-glow {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 58vw;
+  object-fit: fill; /* pure horizontal gradient — vertical stretch is invisible */
+  pointer-events: none;
+  z-index: 0;
+  /* faint at the strike (top), strong through the verdict (middle), fading out
+     into the report (bottom). Percentages are of the full 300vh act height:
+     0-33% strike, 33-66% verdict, 66-100% report. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 26%, #000 42%, #000 62%, transparent 82%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 26%, #000 42%, #000 62%, transparent 82%);
+}
+
+.act-glow-right {
+  right: 0;
+}
+
+.act-glow-left {
+  left: 0;
+  transform: scaleX(-1);
+}
+
+/* the strike scene / verdict scroll normally (no pin); transparent so the
+   act-one bulb shows through behind their content */
+.hero {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* first screen: the hand+knife strike. A real block (not an overlay) so the
+   whole hero scrolls. Children stay absolute within it. Pure black — no red. */
+.hero-scene {
+  position: relative;
+  height: 100vh;
+}
+
+.hero-blood-field {
+  position: absolute;
+  inset: 0;
+}
+
+/* burst hotspot (47% 45%) is the dense core of blood.png's splatter art —
+   confirmed visually against the source asset. JS positions this element so
+   that point lands on the knife tip, then blooms it open from there with an
+   expanding clip-path. height is a fallback; heroStrike.ts sets it from
+   CONFIG.bloodHeightVh so there's a single source of truth. */
+.hero-burst {
+  position: absolute;
+  height: 42vh;
+  width: auto;
+  opacity: 0;
+  transform-origin: 47% 45%;
+  will-change: transform, opacity, clip-path;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* static anchor: vertical-center the hand, shifted left so the sleeve's cut
+   edge sits off-screen at every point in the wind-up/strike rotation sweep
+   (verified against the pivot geometry — see heroStrike.ts CONFIG comment).
+   This transform is never touched by GSAP — only the inner .hero-hand image
+   is animated — so the strike's rotate/translate never fights this centering. */
+.hero-hand-anchor {
+  position: absolute;
+  left: -25vh;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hero-hand {
+  display: block;
+  height: 58vh;
+  width: auto;
+  /* pivot near where the forearm exits the frame (bottom-left of the image),
+     so the strike rotates the knife through an arc instead of translating
+     the whole arm off-screen. Verified visually at 390/768/1440 widths. */
+  transform-origin: 15% 85%;
+  will-change: transform;
+  z-index: 2;
+}
+
+.hero-trail {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-trail-mark {
+  position: absolute;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity, filter;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ---------- hero statement (the verdict) ----------
+   The second screen: a real block below the strike scene, scrolled to on the
+   rising red. heroStrike.ts fades it up as it enters view. */
+.hero-statement {
+  position: relative;
+  min-height: 100vh;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6vw;
+  opacity: 0;
+  will-change: opacity;
+  /* transparent — the continuous act-one bulb glows through from behind */
+  background: transparent;
+}
+
+/* type matched to the design's character panel: Bricolage Grotesque, Light
+   (300), ~36pt, 1.2 line-height (19.3/16.08), 0 tracking. Sized so
+   "There's been a cold-blooded murder" sits on a single line like the ref. */
+.hero-statement-text {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  text-align: center;
+  font-family: var(--font-bricolage);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 3.2vw, 2.9rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--text);
+  text-shadow: 0 0 26px rgba(178, 20, 20, 0.28);
+}
+
+.hero-statement-line {
+  display: block;
+}
+
+.hero-statement-emph {
+  font-weight: 500;
+  color: #f6dcdc;
+}
+
+/* mobile-only art: hidden on desktop, where the real text paragraph shows
+   instead (see the mobile media query for the swap) */
+.hero-statement-img {
+  display: none;
+}
+
+/* ---------- section 3: case file ---------- */
+
+.section3 {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  /* transparent — the continuous act-one bulb fades out through the top here */
+  background: transparent;
+  overflow: hidden;
+  display: flex;
+  /* cards centred vertically in the viewport */
+  align-items: center;
+  justify-content: center;
+  padding: 6vh 6vw;
+}
+
+.s3-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4vw;
+  perspective: 1200px;
+  width: 100%;
+  max-width: 78rem;
+}
+
+.s3-card {
+  position: relative;
+  display: block;
+  /* +20% over the previous clamp(300px, 32vw, 500px) */
+  width: clamp(360px, 38.4vw, 600px);
+  /* lock both cards to the same height so they read as a matched pair */
+  aspect-ratio: 843/1000;
+  background-color: #efe9e0;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.55));
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.s3-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* both pages sit straight, aligned at the same vertical level */
+.s3-card-1 {
+  transform: none;
+  margin-top: 0;
+}
+
+.s3-card-2 {
+  transform: none;
+  margin-top: 0;
+}
+
+.s3-card.is-active {
+  filter: drop-shadow(0 30px 54px rgba(0, 0, 0, 0.65)) brightness(1.06);
+}
+
+.s3-card.is-dimmed {
+  opacity: 0.6;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4)) saturate(0.55) brightness(0.85);
+}
+
+.s3-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: radial-gradient(circle at var(--sheen-x, 50%) var(--sheen-y, 50%), rgba(255, 255, 255, 0.18), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.s3-card.is-active .s3-sheen {
+  opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .s3-stage {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .s3-card {
+    width: min(62vw, 336px);
+  }
+
+  /* stacked on mobile — no vertical stagger */
+  .s3-card-2 {
+    margin-top: 0;
+  }
+}
+
+/* lightbox — single reusable overlay, populated on card click */
+.s3-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.s3-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.s3-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 2, 2, 0.86);
+}
+
+.s3-lightbox-panel {
+  position: relative;
+  max-width: min(92vw, 640px);
+  max-height: 92vh;
+}
+
+.s3-lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+}
+/* prevent the empty src="" from rendering a broken-image icon before the
+   lightbox is opened and the real src is injected by JS */
+.s3-lightbox-img:not([src]), .s3-lightbox-img[src=""] {
+  display: none;
+}
+
+.s3-lightbox-close {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+/* ---------- closing: full-height outro ---------- */
+
+.closing {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6vw;
+}
+
+/* the red "glowing bulb" — the rectangle red-bulb image as a horizontal band
+   of light across the middle; masked top/bottom so its grey edges blend into
+   the black. closing.ts pulses its opacity so it breathes. */
+.closing-glow {
+  position: absolute;
+  inset: 0;
+  background: url('/img/red-bulb-rect.webp') center / 200% auto no-repeat;
+  pointer-events: none;
+  will-change: opacity;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+}
+
+/* same type as the verdict / character panel: Bricolage Grotesque, Light,
+   ~36pt, 1.2 line-height, 0 tracking */
+.closing-text {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  text-align: center;
+  font-family: var(--font-bricolage);
+  font-weight: 300;
+  /* +15% over the previous clamp(1.5rem, 3.2vw, 2.9rem) */
+  font-size: clamp(1.725rem, 3.68vw, 3.335rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--text);
+  text-shadow: 0 0 24px rgba(178, 20, 20, 0.32);
+}
+
+.closing-text span {
+  display: block;
+}
+
+/* ---------- ouija: full-bleed image on clean black ----------
+   It follows the full-height closing slide directly, so it enters naturally
+   from the bottom as the closing line moves up. */
+.ouija {
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ouija-img {
+  display: block;
+  /* fill the full width — no black spaces on the left/right ends */
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- reincarnation: the revival line over a red ellipse of light ----------
+   a single red ellipse image (Ellipse 1.png) glows behind the copy on clean
+   black; reincarnation.ts pulses its opacity so the light breathes. */
+.reincarnation {
+  position: relative;
+  /* compact — less empty space above and below the content */
+  min-height: 86vh;
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  /* content centred inside the ellipse's glow */
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 6vw;
+}
+
+/* the red ellipse glow, centred behind the copy */
+.reincarnation-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* +10% over the previous min(86vh, 96vw) */
+  width: min(95vh, 100vw);
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+  will-change: opacity;
+}
+
+/* same type as the verdict / closing / character panel: Bricolage Grotesque,
+   Light, ~36pt, 1.2 line-height, 0 tracking. Left-aligned block like the ref. */
+.reincarnation-text {
+  position: relative;
+  z-index: 1;
+  text-align: left;
+  font-family: var(--font-bricolage);
+  font-weight: 300;
+  /* larger to fill the compact section like the reference */
+  font-size: clamp(2.5rem, 5.4vw, 5rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--text);
+  text-shadow: 0 0 26px rgba(200, 24, 20, 0.45);
+}
+
+.reincarnation-line {
+  display: block;
+}
+
+/* ---------- brand: the Kacha Mucha revival header ----------
+   red nav bar (eye logo + links + KMK monogram) over a red/yellow sunburst
+   band carrying the big display title. The bright payoff after the dark case. */
+
+/* wraps the homepage slide (#brand) and everything after it. The nav is the
+   first child so position:sticky lets it lock to the top of the viewport as
+   soon as this scope scrolls into view, then stay pinned through the shop
+   slides that follow. It never appears on any slide before #brand. */
+.site-home-scope {
+  position: relative;
+  /* logo height + the nav's vertical padding: how much a hash jump has to
+     clear so the sticky nav doesn't sit on top of the target slide. */
+  --nav-h: calc(clamp(2.4rem, 4vw, 3.4rem) + 2.2rem);
+}
+
+/* nav targets: land below the sticky bar, not under it */
+.site-home-scope > section[id] {
+  scroll-margin-top: var(--nav-h);
+}
+
+.brand {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--kmk-red);
+  overflow: hidden;
+}
+
+.brand-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.1rem clamp(1.4rem, 3vw, 3rem);
+  background: var(--kmk-red);
+}
+
+.brand-logo {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.brand-logo img {
+  height: clamp(2.4rem, 4vw, 3.4rem);
+  width: auto;
+}
+
+.brand-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.2rem, 2.4vw, 2.4rem);
+}
+
+.brand-links a {
+  position: relative;
+  font-family: var(--font-bricolage);
+  font-weight: 300;
+  font-size: clamp(0.95rem, 1.4vw, 1.35rem);
+  color: var(--kmk-yellow);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* a yellow rule wipes in from the left on hover */
+.brand-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.25em;
+  height: 2px;
+  background: var(--kmk-yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.brand-links a:hover::after,
+.brand-links a:focus-visible::after,
+.brand-links a[aria-current]::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-links a::after { transition: none; }
+}
+
+.brand-logo-kmk {
+  height: clamp(1.6rem, 2.6vw, 2.3rem);
+  width: auto;
+  margin-left: clamp(0.6rem, 1.5vw, 1.4rem);
+}
+
+/* sunburst band carrying the title */
+.brand-hero {
+  position: relative;
+  /* top third: sunburst band carrying the title */
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.728vh 4vw;
+  overflow: hidden;
+}
+
+/* the sunburst lives on its own rotating layer so it can spin behind the
+   title without dragging the text along with it. Oversized so the corners
+   never reveal empty space while rotating; "contain" keeps the whole image
+   intact instead of cropping it, and the red fallback fill blends any
+   letterboxed edge seamlessly into the brand red backdrop. */
+.brand-hero::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background-color: var(--kmk-red);
+  background-image: url('/img/sunburst-bg.webp');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translate(-50%, -50%) scale(4.2);
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes brandSunburstSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) scale(4.2);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg) scale(4.2);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .brand-hero::before {
+    animation: brandSunburstSpin 50s linear infinite;
+  }
+}
+
+/* bottom two-thirds: the schoolgirl photo */
+.brand-photo {
+  position: relative;
+  flex: 2 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.brand-photo img {
+  width: 110%;
+  height: 110%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 85%;
+  will-change: transform, opacity;
+}
+
+.brand-tagline {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(5.54rem, 13.2vh, 10.3rem);
+  padding: clamp(0.92rem, 2.38vh, 1.58rem) clamp(1.8rem, 4.2vw, 3.6rem);
+  background: var(--kmk-yellow);
+  transform: translateY(0);
+}
+
+.brand-tagline img {
+  width: 100%;
+  height: auto;
+  display: block;
+  will-change: transform, opacity;
+}
+
+/* heavy display title; small-caps gives the big-initial / smaller-body look of
+   the reference (K + ACHA, M + UCHA) */
+.brand-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  width: min(90vw, 73rem);
+  line-height: 0;
+  will-change: transform, opacity;
+}
+
+.brand-title img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  /* wrap nav so the links don't crush the logos on small screens */
+  .brand-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .brand-tagline img {
+    width: min(92%, 26rem);
+  }
+}
+
+/* ---------- shop: bestseller issues on the bright red canvas ----------
+   the red backing slide; composed elements (covers, starbursts, stickers)
+   layer on top of .shop-stage */
+.shop {
+  position: relative;
+  min-height: 100vh;
+  background: var(--kmk-red);
+  overflow: hidden;
+}
+
+#shop-3 {
+  overflow: visible;
+  z-index: 1;
+}
+
+#shop {
+  z-index: 3;
+}
+
+.shop-top-layout {
+  position: relative;
+  min-height: 100vh;
+}
+
+.shop-top-banner {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: min(100%, 100vw);
+  height: auto;
+  transform: translateX(-50%);
+  z-index: 6;
+}
+
+.shop-paper-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 21%;
+  bottom: 0;
+  background: rgba(239, 233, 224, 0.448);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.shop-color-strip {
+  position: absolute;
+  left: 50%;
+  width: 80%;
+  top: 47%;
+  height: clamp(4rem, 9vh, 6.5rem);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.shop-color-strip-cell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-color-strip-text {
+  width: min(92%, 23rem);
+  height: auto;
+  display: block;
+}
+
+.shop-color-strip-yellow {
+  background: var(--kmk-yellow);
+  color: var(--kmk-red);
+}
+
+.shop-color-strip-red {
+  background: var(--kmk-red);
+  color: var(--kmk-yellow);
+}
+
+.shop-coming-grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44.35%;
+  bottom: auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(0.5rem, 1vw, 1rem);
+  padding: 0 clamp(1rem, 2.5vw, 2rem);
+  z-index: 2;
+}
+
+.shop-coming-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: clamp(18rem, 32vh, 21rem);
+}
+
+.shop-coming-card-1 {
+  transform: translateY(0.2rem);
+}
+
+.shop-coming-card-2 {
+  transform: translateY(0.1rem);
+}
+
+.shop-coming-card-3 {
+  transform: translateY(-0.1rem);
+}
+
+.shop-coming-card-4 {
+  transform: translateY(0.15rem);
+}
+
+.shop-coming-box {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: clamp(10.124rem, 16.474vw, 12.698rem);
+  height: auto;
+  transform: translateX(-50%) rotate(-10deg);
+  z-index: 1;
+}
+
+.shop-coming-card-2 .shop-coming-box {
+  transform: translateX(-50%) rotate(-8deg);
+}
+
+.shop-coming-card-3 .shop-coming-box {
+  transform: translateX(-50%) rotate(-9deg);
+}
+
+.shop-coming-card-4 .shop-coming-box {
+  transform: translateX(-50%) rotate(-8deg);
+}
+
+.shop-coming-band {
+  position: relative;
+  z-index: 2;
+  width: clamp(10.5rem, 20vw, 14rem);
+  margin-top: clamp(3rem, 5.3vw, 4rem);
+  padding: clamp(0.48rem, 1vh, 0.72rem) clamp(0.55rem, 1vw, 0.85rem);
+  background: var(--kmk-yellow);
+  color: var(--kmk-red);
+  font-family: var(--font-bricolage);
+  font-size: clamp(0.9rem, 1.75vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.shop-coming-label {
+  position: relative;
+  z-index: 2;
+  margin: clamp(15.73rem, 24.2vw, 18.15rem) 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.02rem;
+  color: #170808;
+  font-family: var(--font-bricolage);
+  font-size: clamp(1.1232rem, 1.872vw, 1.638rem);
+  font-weight: 600;
+  line-height: 1.05;
+  text-align: center;
+  filter: blur(1.2px);
+}
+
+@media (max-width: 900px) {
+  .shop-color-strip {
+    top: 45%;
+  }
+
+  .shop-coming-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: clamp(2rem, 4vw, 3rem);
+    top: 42.5%;
+  }
+}
+
+.shop-layout {
+  position: relative;
+  min-height: 100vh;
+}
+
+.shop-left-warning,
+.shop-left-parental,
+.shop-left-caution,
+.shop-challenges,
+.shop-row {
+  position: absolute;
+  height: auto;
+}
+
+.shop-left-warning {
+  top: 20%;
+  left: 8%;
+  width: clamp(12rem, 21vw, 18rem);
+  transform: rotate(8deg);
+  z-index: 3;
+}
+
+.shop-left-parental {
+  top: 57%;
+  left: 8%;
+  width: clamp(10rem, 17vw, 15rem);
+  transform: rotate(7deg);
+  z-index: 3;
+}
+
+.shop-left-caution {
+  top: 41%;
+  left: 28%;
+  width: clamp(9rem, 15vw, 13rem);
+  transform: rotate(2deg);
+  z-index: 4;
+}
+
+.shop-challenges {
+  top: 22%;
+  left: 42%;
+  width: clamp(16rem, 25vw, 22rem);
+  transform: rotate(-14deg);
+  z-index: 3;
+}
+
+.shop-row-1 {
+  top: 62%;
+  left: 30%;
+  width: clamp(15rem, 23vw, 22rem);
+  transform: rotate(-18deg);
+  z-index: 1;
+}
+
+.shop-row-2 {
+  top: 38%;
+  left: 58%;
+  width: clamp(17rem, 27vw, 25rem);
+  transform: rotate(-18deg);
+  z-index: 1;
+}
+
+.shop-row-3 {
+  top: 74%;
+  left: 72%;
+  width: clamp(13rem, 20vw, 18rem);
+  transform: rotate(-22deg);
+  z-index: 1;
+}
+
+.shop-stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* the rem floors used to hold this at a fixed minimum size regardless of
+   viewport height, so on a very short window it stayed just as tall as on a
+   normal one and ate into the room the stars needed above it; lowering the
+   floors lets it keep shrinking a little further before it stops */
+/* flush to the slide's own bottom edge: the old rem/vh offset left a strip
+   of bare red between the band and the mosaic slide that follows it */
+.shop-yellow-box-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: clamp(3.6rem, 9vh, 6.4rem);
+  transform: translateX(-50%);
+  background: var(--kmk-yellow);
+  z-index: 1;
+}
+
+.shop-yellow-box-bottom-eyes {
+  --eye-tile-size: clamp(3.84rem, 6.6vw, 5.52rem);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: clamp(4.8rem, 9vh, 6.4rem);
+  transform: translateX(-50%);
+  background-image: url('/img/eye.webp');
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: var(--eye-tile-size) auto;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shop-yellow-box-bottom-eyes {
+    animation: shop-eye-loop-x 5s linear infinite;
+  }
+}
+
+@keyframes shop-eye-loop-x {
+  from {
+    background-position-x: 0%;
+  }
+
+  to {
+    background-position-x: calc(var(--eye-tile-size) * -1);
+  }
+}
+
+/* ---------- mosaic slides: sticker cluster + tilted magazine spreads ----------
+   one continuous tall red canvas (not two separate slides) so large rotated
+   tiles never get clipped at a slide boundary. */
+/* ---------- shop mosaic: the spreads, laid out over two screens ----------
+   The design frame is 1071 x 1516, so the slide stands 141.6vw tall and every
+   tile is placed in vw: the composition is rigid and scales as one block.
+
+   Each spread PNG carries its own rotation baked in on a 3594 x 2628
+   transparent canvas, so no CSS rotation is needed here. The ink sits at a
+   known offset inside that canvas (usually 7.8% in from the left, 1.8% down,
+   filling 75% of the width), and the numbers below are derived from that:
+   width is the canvas, not the visible spread. */
+.shop-mosaic {
+  position: relative;
+  min-height: 141.6vw;
+  /* the outer spreads run off the edges by design, so the slide clips */
+  overflow: hidden;
+}
+
+.mosaic-tile {
+  position: absolute;
+  height: auto;
+  z-index: 1;
+  filter: drop-shadow(0 0.5rem 1.1rem rgba(0, 0, 0, 0.35));
+}
+
+/* phone-only flat collage: hidden on desktop, shown in the mobile block */
+.mosaic-flat {
+  display: none;
+}
+
+/* stickers cluster in the top-left corner, over the spreads */
+.mosaic-sticker-warning {
+  top: 4.21vw;
+  left: 7.81vw;
+  width: 21.36vw;
+  z-index: 2;
+}
+
+.mosaic-sticker-care {
+  top: 0.0vw;
+  left: 63.0vw;
+  width: 25.92vw;
+  z-index: 2;
+}
+
+.mosaic-sticker-caution {
+  top: 16.34vw;
+  left: 38.56vw;
+  width: 13.45vw;
+  z-index: 2;
+}
+
+.mosaic-sticker-parental {
+  top: 30.82vw;
+  left: 7.71vw;
+  width: 16.88vw;
+  z-index: 2;
+}
+
+/* the second caution triangle is a phone-only duplicate; desktop keeps one */
+.mosaic-sticker-caution-2 {
+  display: none;
+}
+
+/* ---------- the diagonal rows ----------
+   The books sit on three parallel diagonals, stepping (-352, +220) design px
+   per book. Each diagonal is a row that travels along that axis, alternating
+   direction: A up-right, B down-left, C up-right.
+
+   A row holds its books twice. The clone set sits exactly one row-length
+   (3 steps = -1056, +660 design px = -98.6vw, +61.6vw) behind the travel
+   direction, so when the row has moved one row-length the clone lands
+   precisely where the original started and the loop closes with no jump. */
+.mosaic-row,
+.mosaic-set {
+  position: absolute;
+  inset: 0;
+}
+
+.mosaic-row {
+  will-change: transform;
+  /* leans into the scroll: --scroll-v is published by lib/scroll.ts. This is
+     the `translate` property, not `transform`, so it composes with the loop
+     animation instead of fighting it. The transition smooths the per-frame
+     velocity into something fluid. */
+  translate: 0 calc(var(--scroll-v, 0) * 0.6px);
+  transition: translate 400ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mosaic-row {
+    translate: none;
+    transition: none;
+  }
+}
+
+.mosaic-row-up .mosaic-set-clone {
+  transform: translate(-98.6vw, 61.6vw);
+}
+
+.mosaic-row-down .mosaic-set-clone {
+  transform: translate(98.6vw, -61.6vw);
+}
+
+@keyframes mosaicDriftUp {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(98.6vw, -61.6vw); }
+}
+
+@keyframes mosaicDriftDown {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-98.6vw, 61.6vw); }
+}
+
+/* Diagonal D carries two books, not three, so its clone belongs two steps
+   behind — not three. At three it left a one-step hole in the chain that
+   rotated through the bottom-right corner as empty red. The travel distance
+   matches the offset, and the duration scales with it so every row moves at
+   the same speed: 20s per step. */
+.mosaic-row-pair.mosaic-row-down .mosaic-set-clone {
+  transform: translate(65.73vw, -41.08vw);
+}
+
+@keyframes mosaicDriftDownPair {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-65.73vw, 41.08vw); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mosaic-row-up {
+    animation: mosaicDriftUp 60s linear infinite;
+  }
+
+  .mosaic-row-down {
+    animation: mosaicDriftDown 60s linear infinite;
+  }
+
+  .mosaic-row-pair.mosaic-row-down {
+    animation: mosaicDriftDownPair 40s linear infinite;
+  }
+}
+
+/* the cascade, top to bottom */
+.mosaic-spread-3 {  /* deep blue, top right */
+  top: 17.81vw;
+  left: 49.59vw;
+  width: 50.47vw;
+}
+
+.mosaic-spread-2 {  /* green recycling */
+  top: 38.66vw;
+  left: 20.03vw;
+  width: 50.13vw;
+}
+
+.mosaic-spread-1 {  /* industrial machines, bleeds off the left */
+  top: 59.25vw;
+  left: -13.46vw;
+  width: 49.27vw;
+}
+
+.mosaic-spread-6 {  /* butter, bleeds off the right */
+  top: 50.33vw;
+  left: 60.37vw;
+  width: 50.13vw;
+}
+
+.mosaic-spread-5 {  /* neutron star, centre */
+  top: 71.22vw;
+  left: 23.1vw;
+  width: 48.89vw;
+}
+
+.mosaic-spread-8 {  /* ornate brown, bleeds off the right */
+  top: 82.54vw;
+  left: 67.83vw;
+  width: 50.13vw;
+}
+
+.mosaic-spread-7 {  /* clay waste collectors, bleeds off the left */
+  top: 91.15vw;
+  left: -3.21vw;
+  width: 50.13vw;
+}
+
+.mosaic-spread-10 {  /* eyes border, bottom centre */
+  top: 103.12vw;
+  left: 34.97vw;
+  width: 50.13vw;
+}
+
+.mosaic-spread-4 {  /* pink, bottom left */
+  top: 123.62vw;
+  left: 2.1vw;
+  width: 50.13vw;
+}
+.mosaic-spread-11 {  /* the new spread, on diagonal C */
+  top: 115.19vw;
+  left: 75.3vw;
+  width: 50.13vw;
+}
+
+.mosaic-spread-9 {  /* black drips, bottom right */
+  top: 135.73vw;
+  left: 42.44vw;
+  width: 50.13vw;
+}
+
+/* ---------- befuzuli: the flagship issue promo before the footer ---------- */
+.befuzuli-slide {
+  position: relative;
+  background: var(--kmk-red);
+  overflow: hidden;
+}
+
+.befuzuli-awning {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.befuzuli-body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  padding: clamp(3rem, 8vh, 6rem) clamp(2rem, 6vw, 5rem);
+}
+
+.befuzuli-cover {
+  flex: 0 0 auto;
+  width: clamp(12rem, 18vw, 18rem);
+  transform: translateX(20%);
+}
+
+.befuzuli-cover {
+  position: relative;
+}
+
+/* the starburst sits behind the cover, as on the shop slide */
+.befuzuli-star {
+  display: none;   /* mobile reference only — see the phone block below */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 178%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+@keyframes befuzuliStarSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.befuzuli-cover-art {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: rotate(-8deg);
+}
+
+.befuzuli-cta-alt {
+  display: none;   /* mobile reference only */
+}
+
+.befuzuli-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 2.4vw, 2rem);
+}
+
+.befuzuli-content {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.6rem, 3.4vh, 2.6rem);
+  margin-left: auto;
+  margin-right: clamp(1rem, 6vw, 5rem);
+  max-width: 42rem;
+  transform: translateX(-30%);
+}
+
+/* .befuzuli-cover's translateX(20%) and .befuzuli-content's translateX(-30%)
+   pull the two together for a tighter, layered composition — but both are a
+   percentage of the element's OWN size, not of the space between them, so
+   on any window narrower than roughly 1000px they close that gap entirely
+   and the cover starts printing over the title. Neutral above the point
+   where the two intentionally overlap; below it, plain flex spacing takes
+   over instead. Distinct from the 720px breakpoint below, which is a full
+   phone redesign, not a spacing fix. */
+@media (max-width: 1000px) {
+  .befuzuli-cover,
+  .befuzuli-content {
+    transform: none;
+  }
+}
+
+.befuzuli-title {
+  width: clamp(20rem, 44vw, 38rem);
+  height: auto;
+  display: block;
+}
+
+.befuzuli-cta {
+  display: inline-flex;
+  transition: translate 160ms ease, box-shadow 160ms ease, scale 100ms ease;
+  align-items: center;
+  justify-content: center;
+  background: var(--kmk-yellow);
+  color: var(--kmk-ink);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  padding: 0.85rem 2.4rem;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+/* each star is interactive: the two upcoming issues announce themselves,
+   the live one is a link through to its product page */
+.shop-item {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  /* the star boxes overlap each other, so the box itself must not catch
+     clicks: only the cover and its label are targets. Otherwise whichever
+     star sits on top swallows the taps meant for its neighbours. */
+  pointer-events: none;
+}
+
+.shop-cover {
+  pointer-events: auto;
+}
+
+.shop-label {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05em;
+  padding: 0.45em 1.2em;
+  border-radius: 999px;
+  background: var(--kmk-yellow);
+  color: var(--kmk-red);
+  font-family: var(--font-bricolage);
+  line-height: 1.15;
+  white-space: nowrap;
+  transform: translate(-50%, 0) rotate(-3deg);
+  pointer-events: auto;
+}
+
+.shop-label-month {
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1.05vw, 1rem);
+}
+
+.shop-label-status {
+  font-weight: 800;
+  font-size: clamp(0.95rem, 1.5vw, 1.4rem);
+}
+
+/* every issue: the label waits for hover, focus or a tap */
+.shop-item .shop-label {
+  opacity: 0;
+  transform: translate(-50%, 0.5rem) rotate(-3deg);
+  transition: opacity 220ms ease, transform 220ms ease;
+  /* while hidden it must not sit in front of the neighbouring star */
+  pointer-events: none;
+}
+
+.shop-item:hover .shop-label,
+.shop-item:focus-visible .shop-label,
+.shop-item.is-revealed .shop-label {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(-3deg);
+  pointer-events: auto;
+}
+
+/* the live issue wears its label the whole time */
+.shop-label-live {
+  color: var(--kmk-ink);
+}
+
+.shop-item-right .shop-cover {
+  transition: scale 220ms ease;
+}
+
+.shop-item-right:hover .shop-cover,
+.shop-item-right:focus-visible .shop-cover {
+  scale: 1.04;
+}
+
+.shop-item:focus-visible {
+  outline: 3px solid var(--kmk-yellow);
+  outline-offset: 0.4rem;
+}
+
+/* Width used to be pure vw, so on a short-but-wide window (a laptop like
+   1366x768, or any browser with a shrunk viewport height) the star grew
+   larger than the vertical room between it and the fixed eye band at the
+   slide's foot, and the "coming soon" label — anchored to the star's own
+   bottom edge — got printed over the band. min() with a vh term caps the
+   star by whichever axis is tighter; the vh multiplier is picked so it
+   never engages at the reference sizes the composition was tuned at
+   (1440x900 and taller), only on the shorter ones where it was overflowing. */
+.shop-item-left {
+  top: 21.6%;
+  left: 6%;
+  width: clamp(17.0368rem, min(28.7496vw, 46vh), 27.6848rem);
+}
+
+.shop-item-center {
+  top: 40.32%;
+  left: 50%;
+  width: clamp(17.0368rem, min(28.7496vw, 46vh), 27.6848rem);
+  transform: translateX(-50%);
+}
+
+.shop-item-right {
+  top: 22.32%;
+  right: 6%;
+  width: clamp(17.0368rem, min(28.7496vw, 46vh), 27.6848rem);
+}
+
+.shop-star {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: center center;
+}
+
+@keyframes shopStarSpinClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shop-star {
+    animation: shopStarSpinClockwise 18s linear infinite;
+  }
+}
+
+.shop-cover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: auto;
+  z-index: 2;
+}
+
+/* same dual-axis treatment as the star above, same ratio (19 * 1.6 = 30.4),
+   so the cover shrinks in step with it rather than becoming the tallest
+   element once the star is capped */
+.shop-cover-left {
+  width: clamp(11rem, min(19vw, 30.4vh), 18rem);
+  transform: translate(-50%, -50%) rotate(-10deg);
+}
+
+.shop-cover-center {
+  width: clamp(11rem, min(19vw, 30.4vh), 18rem);
+  transform: translate(-50%, -48%) rotate(-9deg);
+}
+
+.shop-cover-right {
+  width: clamp(11rem, min(19vw, 30.4vh), 18rem);
+  transform: translate(-50%, -50%) rotate(-8deg);
+}
+
+.shop-eye {
+  position: absolute;
+  top: clamp(4.8rem, 10.4vh, 7.2rem);
+  left: 50%;
+  width: clamp(11.088rem, 22.176vw, 17.7408rem);
+  height: auto;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.shop-eye-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(4.22rem, 8.63vh, 5.82rem);
+  background-image: url('/img/eye.webp');
+  background-repeat: repeat-x;
+  background-position: center 20%;
+  background-size: clamp(5.25rem, 8.63vw, 6.75rem) auto;
+  z-index: 4;
+}
+
+.shop-bottom-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(4.22rem, 8.63vh, 5.82rem);
+  background: var(--kmk-yellow);
+  z-index: 3;
+}
+
+
+/* ===========================================================================
+   MOBILE ART DIRECTION — homepage slides
+   ---------------------------------------------------------------------------
+   The desktop layout is composed off wide design frames and sized in vw/vh;
+   squeezing it narrow does not work, so the phone gets its own staging, built
+   from the mobile references and ordered here exactly as the page scrolls.
+
+   This lives at the end of layout.css on purpose. Vite splits CSS per chunk
+   and links layout.css last, so a separate mobile stylesheet would be
+   overridden by these very rules no matter what order it was imported in.
+   =========================================================================== */
+@media (max-width: 720px) {
+  /* ---------- 1. HERO ----------------------------------------------------
+     Desktop spends two screens on this: the strike, then the verdict. The
+     phone puts both on one — verdict at the top, the arm swinging in from the
+     right beneath it. heroStrike.ts mirrors and re-stages the arm to match. */
+  .hero {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-statement {
+    order: -1;            /* verdict above the strike */
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 30dvh 0 0;
+    align-items: flex-start;
+  }
+
+  /* Mobile shows the "cold blodded murder" image on its own instead of the
+     text paragraph — replaces the four-line justified text treatment that
+     used to live here. Desktop is untouched: .hero-statement-img stays
+     display:none there (base rule), so the real paragraph still renders. */
+  .hero-statement-text {
+    display: none;
+  }
+
+  .hero-statement-img {
+    display: block;
+    width: min(71.4%, 22.1rem);
+    height: auto;
+  }
+
+  .hero-scene {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 46dvh;
+  }
+
+  /* mirrored so the blade swings down-left; heroStrike.ts adds the class */
+  .hero-hand-anchor.is-mirrored {
+    transform: translateY(-50%) scaleX(-1);
+  }
+
+  /* ---------- 2. CASE FILE ----------------------------------------------
+     The two report pages stack and run nearly full width. */
+  .section3 {
+    padding: 8dvh 3vw;
+  }
+
+  .s3-stage {
+    gap: 4vw;
+  }
+
+  .s3-card {
+    width: 94vw;
+  }
+
+  /* ---------- 3. CLOSING + OUIJA + REINCARNATION -------------------------
+     Three full screens on desktop; on the phone they compress into one
+     continuous beat: the line, the board, the revival. */
+  .closing {
+    min-height: 0;
+    padding: 12dvh 8vw 6dvh;
+  }
+
+  .closing-text {
+    width: min(78%, 22rem);
+    margin-inline: auto;
+    margin-top: -20px;
+    text-align: center;
+    font-size: clamp(1.38rem, 7.2vw, 2.04rem);
+    line-height: 1.45;
+  }
+
+  .ouija {
+    min-height: 0;
+    padding-top: 10dvh;
+    align-items: flex-start;
+  }
+
+  .reincarnation {
+    min-height: 0;
+    padding: 14dvh 8vw 16dvh;
+  }
+
+  .reincarnation-text {
+    font-size: clamp(1.38rem, 7.2vw, 2.04rem);
+    line-height: 1.35;
+  }
+
+  /* ---------- NAV: spread links across the full bar on mobile ----------- */
+  .brand-nav {
+    flex-wrap: nowrap;
+    gap: 0;
+    padding: 0.7rem 3vw;
+  }
+
+  .brand-logo img {
+    height: 1.9rem;
+  }
+
+  .brand-links {
+    flex: 1;
+    justify-content: space-evenly;
+    gap: 0;
+  }
+
+  .brand-links a {
+    font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+  }
+
+  .brand-logo-kmk {
+    height: 1.35rem;
+    margin-left: 0.4rem;
+  }
+
+  /* ---------- 4. BRAND ---------------------------------------------------
+     Nav, sunburst title band, the photo, then the yellow tagline strip. */
+  .brand {
+    min-height: 100dvh;
+  }
+
+  .brand-hero {
+    flex: 0 0 auto;
+    padding: 7dvh 4vw;
+  }
+
+  .brand-title img {
+    width: 92vw;
+  }
+
+  .brand-photo {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* fill the slide — absolute inset guarantees the image covers the
+     flex-sized container regardless of natural aspect ratio */
+  .brand-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% 55%;
+    transform: scale(1.18);
+    transform-origin: 70% 55%;
+  }
+
+  .brand-tagline img {
+    width: 96vw;
+  }
+
+  .brand-tagline {
+    min-height: 0;
+    padding-top: clamp(1.1rem, 2.8vh, 1.8rem);
+    padding-bottom: clamp(1.1rem, 2.8vh, 1.8rem);
+  }
+
+  /* ---------- 5. SHOP: the three issues ----------------------------------
+     The desktop triangle does not survive the narrow frame, so the covers
+     step down the screen instead: top-left, centre, bottom-right. */
+  .shop {
+    /* one merged canvas now: the covers, eye and star-band sit up top, the
+       sticker cluster tucks in just below the diagonal band, and the tilted
+       magazine spreads cascade down the red beneath the cluster — all on the
+       SAME coordinate space (formerly the separate #shop-2 slide). The canvas
+       ends right at the bottom of the flat collage (top 70dvh + 158vw tall)
+       so the yellow/black awning on the next slide can drape over that edge. */
+    min-height: calc(70dvh + 159vw);
+  }
+
+  .shop-stage {
+    min-height: 92dvh;
+  }
+
+  .shop-item {
+    width: 41.6vw;
+    z-index: 5;
+  }
+
+  /* The three stars cascade down-right. The 2nd and 3rd stars are stepped a
+     little steeper than the 43° band so they dip toward it on the right and
+     close the red gap, while the leading star stays put and the trailing one
+     keeps just clear of the right edge. Both axes use vw so the slope stays
+     constant on every phone, independent of viewport height. */
+  .shop-item-left {
+    top: 1dvh;
+    left: 1vw;
+  }
+
+  .shop-item-center {
+    top: calc(1dvh + 30vw);
+    left: 30vw;
+    right: auto;
+    transform: none;
+  }
+
+  .shop-item-right {
+    top: calc(1dvh + 59vw);
+    left: 58.5vw;
+    right: auto;
+  }
+
+  .shop-cover {
+    width: 26.4vw;
+  }
+
+  .shop-eye {
+    /* dropped so the line from the centre (2nd) book to the eye sits at a
+       clean 43° — mirroring the book cascade. Enlarged and pulled a little off
+       the extreme right edge so the "watching eye" fills the empty red to the
+       right of the star cascade instead of leaving a bare gap. */
+    top: 6.4dvh;
+    left: auto;
+    right: 6vw;
+    width: 30vw;
+    transform: none;
+  }
+
+  .shop-label {
+    bottom: 0;
+  }
+
+  .shop-label-month { font-size: 0.72rem; }
+  .shop-label-status { font-size: 0.95rem; }
+
+  /* diagonal eye-band: match the top-left → bottom-right staircase of the
+     3 book stars. The band is centred vertically at 45dvh (midpoint of the
+     staircase span 2–58dvh) and rotated ~43° to follow the same slope. */
+  .shop-yellow-box-bottom {
+    bottom: auto;
+    top: calc(48dvh + 3px);
+    left: 50%;
+    width: 220%;
+    height: clamp(2.88rem, 7.2vh, 5.12rem);
+    transform: translate(-50%, -50%) rotate(43deg);
+  }
+
+  .shop-yellow-box-bottom-eyes {
+    bottom: auto;
+    top: calc(48dvh + 3px);
+    left: 50%;
+    width: 220%;
+    height: clamp(3.84rem, 7.2vh, 5.12rem);
+    --eye-tile-size: clamp(3.07rem, 5.28vw, 4.42rem);
+    transform: translate(-50%, -50%) rotate(43deg);
+  }
+
+  /* ---------- 6. MOSAIC --------------------------------------------------
+     The books keep their diagonals but the frame is far narrower, so the
+     whole composition scales up relative to the screen and runs longer. */
+  /* ---------- 6b. MOSAIC: phone cascade ---------------------------------
+     The desktop composition is a wide diagonal field; at 390px it collapses
+     to thumbnails. The phone keeps the same diagonal *rule* with its own
+     parameters: books 62vw wide stepping (-30, +34)vw, so they
+     zigzag down the screen and bleed off both edges.
+
+     The loop distance and clone offset are three steps of that phone step,
+     not the desktop one, or the rows would not close seamlessly. */
+  .shop-mosaic {
+    /* Merged into the shop canvas: pinned over the whole slide (inset:0) so the
+       stickers share one coordinate space with the covers, eye and band above
+       them. A sticker's `top` is now measured from the top of the WHOLE slide,
+       so it can be placed anywhere — including up beside the diagonal band. */
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    /* decorative only on mobile (spreads hidden, stickers are aria-hidden), so
+       it never swallows taps meant for the cover links underneath it */
+    pointer-events: none;
+    /* overflow-x: clip kills the horizontal scroll the wide diagonal spreads
+       would otherwise create (they bleed off both edges by design); overflow-y
+       stays visible so a sticker can bleed past the edge if needed. clip +
+       visible is the one mixed combo CSS allows without forcing auto. */
+    overflow-x: clip;
+    overflow-y: visible;
+    z-index: 4;
+  }
+
+  /* PHONE: a single flat collage image (.mosaic-flat = /img/Layer-21.webp) now
+     carries the whole spread composition, so the individual spread tiles are
+     hidden here. The 5 sticker decals on the left stay. To bring the live
+     spreads back, restore the rows to: display:block; animation:none;
+     translate:none; transform:translateY(calc(43dvh + 88vw)). */
+  .shop-mosaic .mosaic-row {
+    display: none;
+  }
+
+  .mosaic-flat {
+    display: block;
+    position: absolute;
+    top: 70dvh;
+    left: 0;
+    width: 100vw;
+    height: auto;
+    z-index: 3;
+  }
+
+  .shop-mosaic .mosaic-set-clone {
+    display: none;
+  }
+
+  .mosaic-row-up .mosaic-set-clone {
+    transform: translate(-90vw, 102vw);
+  }
+
+  .mosaic-row-down .mosaic-set-clone {
+    transform: translate(90vw, -102vw);
+  }
+
+  @keyframes mosaicDriftUp {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(90vw, -102vw); }
+  }
+
+  @keyframes mosaicDriftDown {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-90vw, 102vw); }
+  }
+
+  .mosaic-row-pair.mosaic-row-down .mosaic-set-clone {
+    transform: translate(60vw, -68vw);
+  }
+
+  @keyframes mosaicDriftDownPair {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-60vw, 68vw); }
+  }
+
+  .mosaic-spread-3 {
+    top: 7.79vw;
+    left: 17.77vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-2 {
+    top: 41.79vw;
+    left: -12.23vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-1 {
+    top: 75.79vw;
+    left: -42.23vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-6 {
+    top: 87.79vw;
+    left: 27.26vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-5 {
+    top: 121.79vw;
+    left: -2.74vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-7 {
+    top: 155.79vw;
+    left: -32.74vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-8 {
+    top: 167.79vw;
+    left: 31.26vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-10 {
+    top: 201.79vw;
+    left: 1.26vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-4 {
+    top: 235.79vw;
+    left: -28.74vw;
+    width: 83.22vw;
+  }
+  .mosaic-spread-11 {
+    top: 247.79vw;
+    left: 35.26vw;
+    width: 83.22vw;
+  }
+
+  .mosaic-spread-9 {
+    top: 281.79vw;
+    left: 5.26vw;
+    width: 83.22vw;
+  }
+
+
+  /* Sticker cluster, phone. Five decals cascade down the left edge per the
+     reference: caution triangle, parental advisory, handle-with-care (kicked
+     out to the right), warning, then a second caution triangle at the foot.
+     Now that the mosaic is merged into the shop canvas, each `top` is measured
+     from the top of the whole slide: `43dvh` sits the cluster just below the
+     diagonal band, then the vw offset steps each sticker down. Lower the 43dvh
+     base to slide the whole cluster up toward the band, raise it to drop them
+     further below.
+     Rotations follow the reference: the whole cluster leans counter-clockwise
+     (left edge down, right edge up) so the decals fan across the red beneath
+     the band, with the parental advisory tilted hardest. */
+  .mosaic-sticker-caution   { top: calc(43dvh + 1vw - 2px);  left: 5vw;  width: 19vw; transform: rotate(-16deg); }
+  .mosaic-sticker-parental  { top: calc(43dvh + 15vw); left: 6vw;  width: 32vw; transform: rotate(-50deg); }
+  .mosaic-sticker-care      { top: calc(43dvh + 30vw); left: 26vw; width: 33vw; transform: rotate(35deg); }
+  .mosaic-sticker-warning   { top: calc(43dvh + 52vw - 2px); left: 6vw;  width: 37vw; transform: rotate(-30deg); }
+  .mosaic-sticker-caution-2 { top: calc(43dvh + 78vw - 2px); left: 5vw;  width: 20vw; transform: rotate(-36deg); display: block; z-index: 2; }
+
+  /* ---------- 7. BEFUZULI ------------------------------------------------ */
+  /* Let the yellow/black awning rise up out of this slide and hang OVER the
+     bottom of the shop collage. The slide is lifted above #shop (z-index:3)
+     so the valance paints in front of the collage (collage behind), and the
+     awning is pulled up with a negative margin to overlap that bottom edge.
+     overflow-x stays clipped so the spinning starburst can't add h-scroll. */
+  .befuzuli-slide {
+    overflow-x: clip;
+    overflow-y: visible;
+    z-index: 6;
+  }
+
+  .befuzuli-awning {
+    position: relative;
+    z-index: 6;
+    margin-top: -22vw;
+  }
+
+  .befuzuli-body {
+    flex-direction: column;
+    align-items: center;
+    gap: 6dvh;
+    padding: 6dvh 6vw 8dvh;
+  }
+
+  .befuzuli-cover {
+    width: 46vw;
+    transform: none;
+  }
+
+  /* the phone reference puts the cover on a starburst and adds a second
+     button beside Get Issue 1 */
+  .befuzuli-star {
+    display: block;
+    width: 68vw;
+    max-width: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .befuzuli-star {
+      animation: befuzuliStarSpin 44s linear infinite;
+    }
+  }
+
+  .befuzuli-cta-alt {
+    display: inline-flex;
+  }
+
+  .befuzuli-actions {
+    gap: 3vw;
+    width: 100%;
+  }
+
+  .befuzuli-cta {
+    flex: 1 1 40%;
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+  }
+
+  .befuzuli-content {
+    margin: 0;
+    transform: none;
+    align-items: center;
+    gap: 4dvh;
+  }
+
+  .befuzuli-title {
+    width: 84vw;
+  }
+
+  .befuzuli-cta {
+    font-size: 1.15rem;
+    padding: 0.7rem 2rem;
+  }
+
+  /* ---------- 8. FOOTER -------------------------------------------------- */
+  .collab-page {
+    padding: 6dvh 6vw;
+  }
+}

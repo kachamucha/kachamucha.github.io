@@ -1,0 +1,140 @@
+/* ---------- collaborations: footer-style page (refund policy + contact) ---------- */
+
+.collab-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(1.6rem, 3vw, 3rem);
+  padding: clamp(2.8rem, 6vh, 4.8rem) clamp(2rem, 5vw, 4.5rem);
+  background: var(--kmk-yellow);
+  border-top: 0.3rem solid var(--kmk-red);
+}
+
+.collab-content {
+  flex: 1 1 52%;
+  min-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.8rem, 3.5vh, 2.6rem);
+}
+
+.collab-block h3 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-bricolage);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+  line-height: 1.25;
+  text-align: left;
+  color: var(--kmk-red);
+}
+
+.collab-block p {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-bricolage);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+  line-height: 1.4;
+  text-align: left;
+  color: var(--kmk-red);
+}
+
+.collab-nowrap {
+  white-space: nowrap;
+}
+
+.collab-block p:last-child {
+  margin-bottom: 0;
+}
+
+.collab-eye {
+  flex: 0 1 36%;
+  min-width: 16rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.6rem, 1.5vh, 1rem);
+}
+
+.collab-eye img {
+  width: 100%;
+  max-width: 26rem;
+  height: auto;
+  display: block;
+}
+
+.collab-copyright {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-bricolage);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  color: var(--kmk-red);
+}
+
+@media (max-width: 780px) {
+  .collab-page {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding-bottom: clamp(4rem, 12vh, 6rem);
+  }
+
+  .collab-eye {
+    order: -1;
+    justify-content: center;
+  }
+}
+
+/* ---------- MOBILE ----------------------------------------------------
+   The phone reference keeps the two-up layout — copy on the left, eye and
+   copyright on the right — just smaller. The 20rem minimum on the copy
+   column is what would otherwise force it to wrap and overflow. */
+@media (max-width: 720px) {
+  .collab-page {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1.4rem 3.5vw 1.8rem;
+  }
+
+  .collab-content {
+    flex: 1 1 58%;
+    min-width: 0;
+    gap: 0.8rem;
+  }
+
+  .collab-block h3 {
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .collab-block p {
+    font-size: 0.68rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.35;
+  }
+
+  .collab-nowrap {
+    white-space: normal;
+  }
+
+  .collab-eye {
+    flex: 0 0 38%;
+    min-width: 0;
+    order: 1;
+    align-self: flex-start;
+    align-items: flex-end;
+  }
+
+  .collab-eye img {
+    max-width: 100%;
+  }
+
+  .collab-copyright {
+    font-size: 0.65rem;
+    text-align: right;
+    white-space: nowrap;
+  }
+}

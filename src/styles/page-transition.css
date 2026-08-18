@@ -1,0 +1,25 @@
+/* ---------- page transition veil ----------
+   The site is four separate documents. Without this every navigation is a
+   white flash; the veil covers on the way out and lifts on arrival so the
+   pages read as one object. Colour is per-page so the veil never fights the
+   slide it covers. */
+
+.page-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--veil, var(--kmk-red));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.page-veil.is-covering {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-veil {
+    display: none;
+  }
+}

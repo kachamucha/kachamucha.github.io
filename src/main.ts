@@ -11,6 +11,7 @@ import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 
 import { initScroll } from './lib/scroll';
 import { initPageTransition } from './lib/pageTransition';
+import { initNav } from './lib/nav';
 import { armEmailPrompt } from './lib/emailModal';
 import { init as hero } from './sections/hero';
 import { initSection3 } from './hero/section3';
@@ -27,8 +28,9 @@ ScrollTrigger.defaults({ anticipatePin: 1 });
 // refresh mid-animation, which breaks pin positions.
 ScrollTrigger.config({ ignoreMobileResize: true });
 
-initScroll();
+const lenis = initScroll();
 initPageTransition();
+const nav = initNav(lenis);
 
 /* #brand is intentionally static and has no entry here: the slide is the
    payoff of the narrative and holds still on purpose. */
@@ -65,8 +67,12 @@ document.fonts.ready.then(() => {
   // reflect the final laid-out page height (images can shift element offsets).
   if (document.readyState === 'complete') {
     ScrollTrigger.refresh();
+    nav.scrollToInitialHash();
   } else {
-    window.addEventListener('load', () => ScrollTrigger.refresh());
+    window.addEventListener('load', () => {
+      ScrollTrigger.refresh();
+      nav.scrollToInitialHash();
+    });
   }
 });
 

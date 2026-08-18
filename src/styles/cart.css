@@ -310,12 +310,14 @@ body:has(.cart-page) {
   /* The phone reference keeps all three columns on one row — thumbnail and
      name, then the stepper, then the total. That mock is drawn wider than a
      390px phone, where three columns leave the product name about 60px and
-     unreadable, so the row only stays three-up from 430px and stacks below. */
+     unreadable, so the row only stays three-up from 500px and stacks below.
+     Below 500 the fixed stepper/bin widths overflow the row and the pill
+     collides with the name, so the stacked layout is used instead. */
   .cart-inner {
     min-width: 0;
   }
 
-  /* below 430px the row stacks, so a three-column header aligns with
+  /* below 500px the row stacks, so a three-column header aligns with
      nothing — it comes back with the three-up row further down */
   .cart-head {
     display: none;
@@ -369,8 +371,8 @@ body:has(.cart-page) {
   }
 }
 
-/* ---------- 430px and up: the reference's three-column row fits ---------- */
-@media (min-width: 430px) and (max-width: 720px) {
+/* ---------- 500px and up: the reference's three-column row fits ---------- */
+@media (min-width: 500px) and (max-width: 720px) {
   /* auto columns rather than fixed ones: the stepper and the total take
      exactly what they need and the product name keeps the rest, so the row
      can never add up to more than the sheet */

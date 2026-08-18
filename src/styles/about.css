@@ -229,7 +229,7 @@ body:has(.about-page) {
     flex-direction: column;
     align-items: stretch;
     gap: 1.2rem;
-    padding: 0 4vw 1.6rem;
+    padding: 0 4vw;
   }
 
   .about-founder-copy {
@@ -239,8 +239,8 @@ body:has(.about-page) {
 
   .about-founder-photo {
     min-width: 0;
-    width: 62vw;
-    align-self: flex-end;
+    width: 100%;
+    align-self: stretch;
     transform: none;
   }
 }

@@ -1003,30 +1003,30 @@ body:has(#report) {
 
 /* stickers cluster in the top-left corner, over the spreads */
 .mosaic-sticker-warning {
-  top: 4.21vw;
-  left: 7.81vw;
-  width: 21.36vw;
+  top: 1.97vw;
+  left: 6.22vw;
+  width: 29.90vw;
   z-index: 2;
 }
 
 .mosaic-sticker-care {
-  top: 0.0vw;
-  left: 63.0vw;
-  width: 25.92vw;
+  top: -2.94vw;
+  left: 54.75vw;
+  width: 36.29vw;
   z-index: 2;
 }
 
 .mosaic-sticker-caution {
-  top: 16.34vw;
-  left: 38.56vw;
-  width: 13.45vw;
+  top: 13.80vw;
+  left: 35.87vw;
+  width: 18.83vw;
   z-index: 2;
 }
 
 .mosaic-sticker-parental {
-  top: 30.82vw;
-  left: 7.71vw;
-  width: 16.88vw;
+  top: 26.51vw;
+  left: 7.25vw;
+  width: 23.63vw;
   z-index: 2;
 }
 
@@ -1133,48 +1133,48 @@ body:has(#report) {
 }
 
 .mosaic-spread-6 {  /* butter, bleeds off the right */
-  top: 50.33vw;
+  top: 43.83vw;
   left: 60.37vw;
   width: 50.13vw;
 }
 
 .mosaic-spread-5 {  /* neutron star, centre */
-  top: 71.22vw;
+  top: 64.72vw;
   left: 23.1vw;
   width: 48.89vw;
 }
 
 .mosaic-spread-8 {  /* ornate brown, bleeds off the right */
-  top: 82.54vw;
+  top: 69.59vw;
   left: 67.83vw;
   width: 50.13vw;
 }
 
 .mosaic-spread-7 {  /* clay waste collectors, bleeds off the left */
-  top: 91.15vw;
+  top: 84.65vw;
   left: -3.21vw;
   width: 50.13vw;
 }
 
 .mosaic-spread-10 {  /* eyes border, bottom centre */
-  top: 103.12vw;
+  top: 90.17vw;
   left: 34.97vw;
   width: 50.13vw;
 }
 
 .mosaic-spread-4 {  /* pink, bottom left */
-  top: 123.62vw;
+  top: 110.67vw;
   left: 2.1vw;
   width: 50.13vw;
 }
 .mosaic-spread-11 {  /* the new spread, on diagonal C */
-  top: 115.19vw;
+  top: 95.71vw;
   left: 75.3vw;
   width: 50.13vw;
 }
 
 .mosaic-spread-9 {  /* black drips, bottom right */
-  top: 135.73vw;
+  top: 116.25vw;
   left: 42.44vw;
   width: 50.13vw;
 }
@@ -1547,6 +1547,24 @@ body:has(#report) {
     min-height: 46dvh;
   }
 
+  /* Pre-stage the arm for mobile so it never flashes in its desktop position
+     (far left, oversized) in the moment before heroStrike.ts runs on load —
+     the script waits for document.fonts.ready, and until then only the base
+     desktop staging applies. These values mirror the MOBILE config in
+     heroStrike.ts (handRightVh -19, handTopPct 54, handHeightVh 27.2); the
+     script re-applies the exact same numbers, so there is no jump when it
+     takes over. */
+  .hero-hand-anchor {
+    left: auto;
+    right: -19vh;
+    top: 54%;
+    transform: translateY(-50%) scaleX(-1);
+  }
+
+  .hero-hand {
+    height: 27.2vh;
+  }
+
   /* mirrored so the blade swings down-left; heroStrike.ts adds the class */
   .hero-hand-anchor.is-mirrored {
     transform: translateY(-50%) scaleX(-1);
@@ -1743,7 +1761,7 @@ body:has(#report) {
      staircase span 2–58dvh) and rotated ~43° to follow the same slope. */
   .shop-yellow-box-bottom {
     bottom: auto;
-    top: calc(48dvh + 3px);
+    top: calc(49dvh + 3px);
     left: 50%;
     width: 220%;
     height: clamp(2.88rem, 7.2vh, 5.12rem);
@@ -1752,7 +1770,7 @@ body:has(#report) {
 
   .shop-yellow-box-bottom-eyes {
     bottom: auto;
-    top: calc(48dvh + 3px);
+    top: calc(49dvh + 3px);
     left: 50%;
     width: 220%;
     height: clamp(3.84rem, 7.2vh, 5.12rem);

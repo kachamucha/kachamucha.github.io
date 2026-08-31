@@ -11,7 +11,7 @@
 :root {
   --tag-green:  #45c04a;
   --tag-blue:   #2b5cf5;
-  --tag-orange: #e8823c;
+  --tag-orange: #ff7a00;
 }
 
 body:has(.issue-page) {

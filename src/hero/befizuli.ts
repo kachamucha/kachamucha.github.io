@@ -6,7 +6,7 @@ import { MOTION_OK_DESKTOP, MOTION_STATIC } from '../lib/reducedMotion';
    only hard sell on the page, so it assembles itself as you arrive: the
    awning drops in, the cover swings onto it, then the title and the CTA. */
 
-const SECTION_SELECTOR = '#befuzuli';
+const SECTION_SELECTOR = '#befizuli';
 
 const CONFIG = {
   awningDropPx: -60,
@@ -17,14 +17,14 @@ const CONFIG = {
   duration: 0.8
 } as const;
 
-export function initBefuzuli(): void {
+export function initBefizuli(): void {
   const section = document.querySelector<HTMLElement>(SECTION_SELECTOR);
   if (!section) return;
 
-  const awning = section.querySelector<HTMLElement>('.befuzuli-awning');
-  const cover = section.querySelector<HTMLElement>('.befuzuli-cover img');
-  const title = section.querySelector<HTMLElement>('.befuzuli-title');
-  const cta = section.querySelector<HTMLElement>('.befuzuli-cta');
+  const awning = section.querySelector<HTMLElement>('.befizuli-awning');
+  const cover = section.querySelector<HTMLElement>('.befizuli-cover img');
+  const title = section.querySelector<HTMLElement>('.befizuli-title');
+  const cta = section.querySelector<HTMLElement>('.befizuli-cta');
   const parts = [awning, cover, title, cta].filter(Boolean) as HTMLElement[];
   if (!parts.length) return;
 

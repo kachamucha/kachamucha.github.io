@@ -14,9 +14,9 @@ export type Product = {
 export const CATALOG: Record<string, Product> = {
   'issue-01': {
     id: 'issue-01',
-    title: 'Issue 01  Befuzuli Sawaal',
+    title: 'Issue 01  Befizuli Sawaal',
     cover: `${import.meta.env.BASE_URL}img/cover-3.webp`,
-    coverAlt: 'Befuzuli Sawaal magazine cover',
+    coverAlt: 'Befizuli Sawaal magazine cover',
     price: 900,
     compareAt: 1500
   }

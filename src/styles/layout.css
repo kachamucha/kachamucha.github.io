@@ -1179,20 +1179,20 @@ body:has(#report) {
   width: 50.13vw;
 }
 
-/* ---------- befuzuli: the flagship issue promo before the footer ---------- */
-.befuzuli-slide {
+/* ---------- befizuli: the flagship issue promo before the footer ---------- */
+.befizuli-slide {
   position: relative;
   background: var(--kmk-red);
   overflow: hidden;
 }
 
-.befuzuli-awning {
+.befizuli-awning {
   display: block;
   width: 100%;
   height: auto;
 }
 
-.befuzuli-body {
+.befizuli-body {
   position: relative;
   display: flex;
   align-items: center;
@@ -1202,18 +1202,18 @@ body:has(#report) {
   padding: clamp(3rem, 8vh, 6rem) clamp(2rem, 6vw, 5rem);
 }
 
-.befuzuli-cover {
+.befizuli-cover {
   flex: 0 0 auto;
   width: clamp(12rem, 18vw, 18rem);
   transform: translateX(20%);
 }
 
-.befuzuli-cover {
+.befizuli-cover {
   position: relative;
 }
 
 /* the starburst sits behind the cover, as on the shop slide */
-.befuzuli-star {
+.befizuli-star {
   display: none;   /* mobile reference only — see the phone block below */
   position: absolute;
   top: 50%;
@@ -1224,12 +1224,12 @@ body:has(#report) {
   z-index: 0;
 }
 
-@keyframes befuzuliStarSpin {
+@keyframes befizuliStarSpin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-.befuzuli-cover-art {
+.befizuli-cover-art {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -1238,18 +1238,18 @@ body:has(#report) {
   transform: rotate(-8deg);
 }
 
-.befuzuli-cta-alt {
+.befizuli-cta-alt {
   display: none;   /* mobile reference only */
 }
 
-.befuzuli-actions {
+.befizuli-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: clamp(1rem, 2.4vw, 2rem);
 }
 
-.befuzuli-content {
+.befizuli-content {
   flex: 0 1 auto;
   display: flex;
   flex-direction: column;
@@ -1261,7 +1261,7 @@ body:has(#report) {
   transform: translateX(-30%);
 }
 
-/* .befuzuli-cover's translateX(20%) and .befuzuli-content's translateX(-30%)
+/* .befizuli-cover's translateX(20%) and .befizuli-content's translateX(-30%)
    pull the two together for a tighter, layered composition — but both are a
    percentage of the element's OWN size, not of the space between them, so
    on any window narrower than roughly 1000px they close that gap entirely
@@ -1270,19 +1270,19 @@ body:has(#report) {
    over instead. Distinct from the 720px breakpoint below, which is a full
    phone redesign, not a spacing fix. */
 @media (max-width: 1000px) {
-  .befuzuli-cover,
-  .befuzuli-content {
+  .befizuli-cover,
+  .befizuli-content {
     transform: none;
   }
 }
 
-.befuzuli-title {
+.befizuli-title {
   width: clamp(20rem, 44vw, 38rem);
   height: auto;
   display: block;
 }
 
-.befuzuli-cta {
+.befizuli-cta {
   display: inline-flex;
   transition: translate 160ms ease, box-shadow 160ms ease, scale 100ms ease;
   align-items: center;
@@ -1948,71 +1948,71 @@ body:has(#report) {
      so the valance paints in front of the collage (collage behind), and the
      awning is pulled up with a negative margin to overlap that bottom edge.
      overflow-x stays clipped so the spinning starburst can't add h-scroll. */
-  .befuzuli-slide {
+  .befizuli-slide {
     overflow-x: clip;
     overflow-y: visible;
     z-index: 6;
   }
 
-  .befuzuli-awning {
+  .befizuli-awning {
     position: relative;
     z-index: 6;
     margin-top: -22vw;
   }
 
-  .befuzuli-body {
+  .befizuli-body {
     flex-direction: column;
     align-items: center;
     gap: 6dvh;
     padding: 6dvh 6vw 8dvh;
   }
 
-  .befuzuli-cover {
+  .befizuli-cover {
     width: 46vw;
     transform: none;
   }
 
   /* the phone reference puts the cover on a starburst and adds a second
      button beside Get Issue 1 */
-  .befuzuli-star {
+  .befizuli-star {
     display: block;
     width: 68vw;
     max-width: none;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .befuzuli-star {
-      animation: befuzuliStarSpin 44s linear infinite;
+    .befizuli-star {
+      animation: befizuliStarSpin 44s linear infinite;
     }
   }
 
-  .befuzuli-cta-alt {
+  .befizuli-cta-alt {
     display: inline-flex;
   }
 
-  .befuzuli-actions {
+  .befizuli-actions {
     gap: 3vw;
     width: 100%;
   }
 
-  .befuzuli-cta {
+  .befizuli-cta {
     flex: 1 1 40%;
     font-size: 1rem;
     padding: 0.7rem 1rem;
   }
 
-  .befuzuli-content {
+  .befizuli-content {
     margin: 0;
     transform: none;
     align-items: center;
     gap: 4dvh;
   }
 
-  .befuzuli-title {
+  .befizuli-title {
     width: 84vw;
   }
 
-  .befuzuli-cta {
+  .befizuli-cta {
     font-size: 1.15rem;
     padding: 0.7rem 2rem;
   }

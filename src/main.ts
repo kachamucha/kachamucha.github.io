@@ -20,7 +20,7 @@ import { initReincarnation } from './hero/reincarnation';
 import { initShop } from './hero/shop';
 import { initOuija } from './hero/ouija';
 import { initMosaic } from './hero/mosaic';
-import { initBefuzuli } from './hero/befuzuli';
+import { initBefizuli } from './hero/befizuli';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin, ScrambleTextPlugin, MorphSVGPlugin);
 ScrollTrigger.defaults({ anticipatePin: 1 });
@@ -42,7 +42,7 @@ const sections: Record<string, (el: HTMLElement) => void> = {
   shop: () => initShop(),
   ouija: () => initOuija(),
   mosaic: () => initMosaic(),
-  befuzuli: () => initBefuzuli()
+  befizuli: () => initBefizuli()
 };
 
 // Wait for custom fonts before initialising scroll animations.

@@ -1,7 +1,7 @@
 export const MOTION_OK = '(prefers-reduced-motion: no-preference)';
 export const MOTION_REDUCED = '(prefers-reduced-motion: reduce)';
 
-/* Phone slides (shop, befuzuli) hold still on purpose: only the CSS star
+/* Phone slides (shop, befizuli) hold still on purpose: only the CSS star
    spins are allowed to move there. These pair a desktop-only "animate" query
    with a "static" query that also catches every phone, so a section's
    entrance timeline never runs at <=720px regardless of motion preference. */

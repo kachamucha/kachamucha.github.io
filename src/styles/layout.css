@@ -1295,6 +1295,7 @@ body:has(#report) {
   padding: 0.85rem 2.4rem;
   border-radius: 999px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 /* each star is interactive: the two upcoming issues announce themselves,
@@ -1996,7 +1997,7 @@ body:has(#report) {
   }
 
   .befizuli-cta {
-    flex: 1 1 40%;
+    flex: 0 1 auto;
     font-size: 1rem;
     padding: 0.7rem 1rem;
   }

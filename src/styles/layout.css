@@ -1631,17 +1631,18 @@ body:has(#report) {
 
   .brand-links {
     flex: 1;
-    justify-content: space-evenly;
-    gap: 0;
+    justify-content: space-between;
+    gap: 1.6vw;
   }
 
   .brand-links a {
-    font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+    font-size: clamp(0.72rem, 3.2vw, 1.1rem);
   }
 
   .brand-logo-kmk {
     height: 1.35rem;
     margin-left: 0.4rem;
+    flex: 0 0 auto;
   }
 
   /* ---------- 4. BRAND ---------------------------------------------------

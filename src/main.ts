@@ -17,7 +17,6 @@ import { init as hero } from './sections/hero';
 import { initSection3 } from './hero/section3';
 import { initClosing } from './hero/closing';
 import { initReincarnation } from './hero/reincarnation';
-import { initShop } from './hero/shop';
 import { initOuija } from './hero/ouija';
 import { initMosaic } from './hero/mosaic';
 import { initBefizuli } from './hero/befizuli';
@@ -39,7 +38,6 @@ const sections: Record<string, (el: HTMLElement) => void> = {
   section3: () => initSection3(),
   closing: () => initClosing(),
   reincarnation: () => initReincarnation(),
-  shop: () => initShop(),
   ouija: () => initOuija(),
   mosaic: () => initMosaic(),
   befizuli: () => initBefizuli()

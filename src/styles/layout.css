@@ -1352,23 +1352,6 @@ body:has(#report) {
   font-size: clamp(0.95rem, 1.5vw, 1.4rem);
 }
 
-/* every issue: the label waits for hover, focus or a tap */
-.shop-item .shop-label {
-  opacity: 0;
-  transform: translate(-50%, 0.5rem) rotate(-3deg);
-  transition: opacity 220ms ease, transform 220ms ease;
-  /* while hidden it must not sit in front of the neighbouring star */
-  pointer-events: none;
-}
-
-.shop-item:hover .shop-label,
-.shop-item:focus-visible .shop-label,
-.shop-item.is-revealed .shop-label {
-  opacity: 1;
-  transform: translate(-50%, 0) rotate(-3deg);
-  pointer-events: auto;
-}
-
 /* the live issue wears its label the whole time */
 .shop-label-live {
   color: var(--kmk-ink);

@@ -932,7 +932,7 @@ body:has(#report) {
   bottom: 0;
   left: 50%;
   width: 100%;
-  height: clamp(3.6rem, 9vh, 6.4rem);
+  height: clamp(4.8rem, 9vh, 6.4rem);
   transform: translateX(-50%);
   background: var(--kmk-yellow);
   z-index: 1;
@@ -1449,9 +1449,13 @@ body:has(#report) {
 
 .shop-eye {
   position: absolute;
-  top: clamp(4.8rem, 10.4vh, 7.2rem);
+  top: clamp(3.2rem, 10.4vh, 7.2rem);
   left: 50%;
-  width: clamp(11.088rem, 22.176vw, 17.7408rem);
+  /* the vh term only engages once the viewport gets short (below ~900px
+     tall it starts trimming the eye down), so its bottom spikes clear the
+     center star's top point instead of colliding with it, without shrinking
+     the eye on any normal-height viewport */
+  width: clamp(5.5rem, min(22.176vw, 31.5vh), 17.7408rem);
   height: auto;
   transform: translateX(-50%);
   z-index: 5;
@@ -1749,7 +1753,7 @@ body:has(#report) {
     top: calc(49dvh + 3px);
     left: 50%;
     width: 220%;
-    height: clamp(2.88rem, 7.2vh, 5.12rem);
+    height: clamp(3.84rem, 7.2vh, 5.12rem);
     transform: translate(-50%, -50%) rotate(43deg);
   }
 

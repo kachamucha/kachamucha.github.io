@@ -1322,41 +1322,6 @@ body:has(#report) {
   pointer-events: auto;
 }
 
-.shop-label {
-  position: absolute;
-  left: 50%;
-  bottom: 4%;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.05em;
-  padding: 0.45em 1.2em;
-  border-radius: 999px;
-  background: var(--kmk-yellow);
-  color: var(--kmk-red);
-  font-family: var(--font-bricolage);
-  line-height: 1.15;
-  white-space: nowrap;
-  transform: translate(-50%, 0) rotate(-3deg);
-  pointer-events: auto;
-}
-
-.shop-label-month {
-  font-weight: 500;
-  font-size: clamp(0.7rem, 1.05vw, 1rem);
-}
-
-.shop-label-status {
-  font-weight: 800;
-  font-size: clamp(0.95rem, 1.5vw, 1.4rem);
-}
-
-/* the live issue wears its label the whole time */
-.shop-label-live {
-  color: var(--kmk-ink);
-}
-
 .shop-item-right .shop-cover {
   transition: scale 220ms ease;
 }
@@ -1737,13 +1702,6 @@ body:has(#report) {
     width: 30vw;
     transform: none;
   }
-
-  .shop-label {
-    bottom: 0;
-  }
-
-  .shop-label-month { font-size: 0.72rem; }
-  .shop-label-status { font-size: 0.95rem; }
 
   /* diagonal eye-band: match the top-left → bottom-right staircase of the
      3 book stars. The band is centred vertically at 45dvh (midpoint of the

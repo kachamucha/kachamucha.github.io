@@ -424,11 +424,11 @@ body:has(#report) {
 }
 
 /* same type as the verdict / closing / character panel: Bricolage Grotesque,
-   Light, ~36pt, 1.2 line-height, 0 tracking. Left-aligned block like the ref. */
+   Light, ~36pt, 1.2 line-height, 0 tracking. Centered block. */
 .reincarnation-text {
   position: relative;
   z-index: 1;
-  text-align: left;
+  text-align: center;
   font-family: var(--font-bricolage);
   font-weight: 300;
   /* larger to fill the compact section like the reference */

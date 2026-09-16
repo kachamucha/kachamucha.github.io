@@ -567,7 +567,7 @@ body:has(#report) {
   height: 150%;
   background-color: var(--kmk-red);
   background-image: url('/img/sunburst-bg.webp');
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   transform: translate(-50%, -50%) scale(4.2);

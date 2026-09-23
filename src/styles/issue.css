@@ -73,6 +73,13 @@ body:has(.issue-page) {
   min-height: 0;
 }
 
+/* ---------- "Senior/Junior Issue 01" text art, above the cover ---------- */
+.issue-heading-text {
+  display: block;
+  width: clamp(11rem, 26vw, 18rem);
+  height: auto;
+}
+
 /* ---------- cover on the starburst ---------- */
 .issue-cover {
   position: relative;
@@ -170,14 +177,6 @@ body:has(.issue-page) {
   display: flex;
   flex-direction: column;
   gap: calc(1.1 * var(--u));
-}
-
-.issue-title {
-  margin: 0;
-  font-weight: 800;
-  font-size: calc(1.9 * var(--u));
-  line-height: 1.1;
-  color: var(--kmk-ink);
 }
 
 .issue-subtitle {
@@ -353,10 +352,11 @@ body:has(.issue-page) {
     display: contents;
   }
 
-  .issue-cover  { order: 1; }
-  .issue-intro  { order: 2; }
-  .issue-buy    { order: 3; margin-top: 0; }
-  .issue-themes { order: 4; }
+  .issue-heading-text { order: 1; }
+  .issue-cover        { order: 2; }
+  .issue-intro        { order: 3; }
+  .issue-buy          { order: 4; margin-top: 0; }
+  .issue-themes       { order: 5; }
 
   .issue-left,
   .issue-right {
@@ -379,9 +379,9 @@ body:has(.issue-page) {
     gap: calc(0.9 * var(--u)) calc(0.7 * var(--u));
   }
 
-  .issue-title    { font-size: calc(1.7 * var(--u)); }
-  .issue-subtitle { font-size: calc(2.5 * var(--u)); }
-  .issue-copy     { font-size: calc(1.55 * var(--u)); text-align: left; }
+  .issue-heading-text { width: calc(28 * var(--u)); margin: 0 auto; }
+  .issue-subtitle     { font-size: calc(2.5 * var(--u)); }
+  .issue-copy         { font-size: calc(1.55 * var(--u)); text-align: left; }
 
   .issue-footer-note p { font-size: calc(1.55 * var(--u)); }
 

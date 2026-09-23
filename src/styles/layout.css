@@ -1231,7 +1231,7 @@ body:has(#report) {
 
 .befizuli-group-label {
   display: block;
-  width: clamp(10rem, 15vw, 13rem);
+  width: clamp(12rem, 18vw, 15rem);
   height: auto;
 }
 
@@ -1243,7 +1243,7 @@ body:has(#report) {
 
 .befizuli-about-cta {
   display: block;
-  width: min(100%, 34rem);
+  width: clamp(10rem, 15vw, 13rem);
   transition: scale 100ms ease;
 }
 

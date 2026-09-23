@@ -34,7 +34,8 @@ body:has(.issue-page) {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: calc(2.2 * var(--u));
 }
 
@@ -46,6 +47,22 @@ body:has(.issue-page) {
   row-gap: calc(2 * var(--u));
   align-items: stretch;
   max-width: calc(95.6 * var(--u));
+}
+
+/* ---------- age-recommendation note, below the fold ---------- */
+.issue-footer-note {
+  width: 100%;
+  max-width: calc(95.6 * var(--u));
+  margin-top: calc(3 * var(--u));
+  padding-top: calc(2.4 * var(--u));
+  border-top: 2px solid var(--kmk-ink);
+}
+
+.issue-footer-note p {
+  margin: 0;
+  font-size: calc(1.53 * var(--u));
+  line-height: 1.4;
+  color: var(--kmk-ink);
 }
 
 .issue-left,
@@ -156,6 +173,14 @@ body:has(.issue-page) {
 }
 
 .issue-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: calc(1.9 * var(--u));
+  line-height: 1.1;
+  color: var(--kmk-ink);
+}
+
+.issue-subtitle {
   margin: 0;
   font-weight: 800;
   font-size: calc(2.85 * var(--u));
@@ -354,8 +379,11 @@ body:has(.issue-page) {
     gap: calc(0.9 * var(--u)) calc(0.7 * var(--u));
   }
 
-  .issue-title { font-size: calc(2.5 * var(--u)); }
-  .issue-copy  { font-size: calc(1.55 * var(--u)); text-align: left; }
+  .issue-title    { font-size: calc(1.7 * var(--u)); }
+  .issue-subtitle { font-size: calc(2.5 * var(--u)); }
+  .issue-copy     { font-size: calc(1.55 * var(--u)); text-align: left; }
+
+  .issue-footer-note p { font-size: calc(1.55 * var(--u)); }
 
   .issue-buy       { gap: calc(1 * var(--u)); }
   .issue-qty-btn,

@@ -1883,7 +1883,11 @@ body:has(#report) {
   }
 
   .befizuli-group-label {
-    width: min(100%, 24rem);
+    width: 58vw;
+  }
+
+  .befizuli-about-cta {
+    width: 66vw;
   }
 
   /* ---------- 8. FOOTER -------------------------------------------------- */

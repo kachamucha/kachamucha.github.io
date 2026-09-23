@@ -148,10 +148,13 @@ body:has(.issue-page) {
 
 .issue-subtitle {
   margin: 0;
-  font-weight: 800;
-  font-size: calc(2.85 * var(--u));
-  line-height: 1.1;
-  color: var(--kmk-ink);
+  line-height: 0;
+}
+
+.issue-subtitle img {
+  display: block;
+  width: clamp(14rem, 26vw, 20rem);
+  height: auto;
 }
 
 .issue-copy {
@@ -342,7 +345,7 @@ body:has(.issue-page) {
   }
 
   .issue-heading-text { width: calc(28 * var(--u)); margin: 0 auto; }
-  .issue-subtitle     { font-size: calc(2.5 * var(--u)); }
+  .issue-subtitle img { width: calc(24 * var(--u)); }
   .issue-copy         { font-size: calc(1.55 * var(--u)); text-align: left; }
 
   .issue-footer-note p { font-size: calc(1.55 * var(--u)); }

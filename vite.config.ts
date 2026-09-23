@@ -19,6 +19,7 @@ export default defineConfig(() => ({
         main: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
         issue1: resolve(__dirname, 'issue-01.html'),
+        issue2: resolve(__dirname, 'issue-02.html'),
         cart: resolve(__dirname, 'cart.html')
       }
     }

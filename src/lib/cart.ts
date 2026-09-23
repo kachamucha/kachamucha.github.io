@@ -19,6 +19,14 @@ export const CATALOG: Record<string, Product> = {
     coverAlt: 'Befizuli Sawaal magazine cover',
     price: 900,
     compareAt: 1500
+  },
+  'issue-02': {
+    id: 'issue-02',
+    title: 'Issue 01  Befizuli Sawaal Junior',
+    cover: `${import.meta.env.BASE_URL}img/shop-junior.webp`,
+    coverAlt: 'Befizuli Sawaal Junior magazine covers',
+    price: 900,
+    compareAt: 1500
   }
 };
 

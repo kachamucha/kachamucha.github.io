@@ -1424,8 +1424,8 @@ body:has(#report) {
 @media (max-width: 720px) {
   /* ---------- 1. HERO ----------------------------------------------------
      Desktop spends two screens on this: the strike, then the verdict. The
-     phone puts both on one — verdict at the top, the arm swinging in from the
-     right beneath it. heroStrike.ts mirrors and re-stages the arm to match. */
+     phone puts both on one — strike (hand + blood) at the top, the verdict
+     text revealed below it as the scrubbed sequence's final beat. */
   .hero {
     min-height: 100dvh;
     display: flex;
@@ -1433,10 +1433,9 @@ body:has(#report) {
   }
 
   .hero-statement {
-    order: -1;            /* verdict above the strike */
     flex: 0 0 auto;
     min-height: 0;
-    padding: 30dvh 0 0;
+    padding: 4dvh 0 0;
     align-items: flex-start;
   }
 

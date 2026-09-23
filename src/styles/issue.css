@@ -333,20 +333,44 @@ body:has(.issue-page) {
     gap: calc(1.6 * var(--u));
   }
 
-  .issue-cover {
-    min-height: calc(24 * var(--u));
+  /* full-bleed section dividers: negative margin cancels .issue-page's own
+     side padding so the rule spans the whole screen width, like the phone
+     reference. Each divider closes out the block above it. */
+  .issue-cover,
+  .issue-buy,
+  .issue-themes {
+    padding-bottom: calc(2.2 * var(--u));
+    margin-left: calc(-3 * var(--u));
+    margin-right: calc(-3 * var(--u));
+    padding-left: calc(3 * var(--u));
+    padding-right: calc(3 * var(--u));
+    border-bottom: 2px solid var(--kmk-ink);
   }
 
-  .issue-cover-star { width: calc(26 * var(--u)); }
-  .issue-cover-art  { width: calc(14.5 * var(--u)); }
+  .issue-cover {
+    min-height: calc(30 * var(--u));
+  }
+
+  .issue-cover-star { width: calc(24 * var(--u)); }
+  .issue-cover-art  { width: calc(13.5 * var(--u)); }
 
   .issue-themes-img {
     max-width: 100%;
   }
 
   .issue-heading-text { width: calc(28 * var(--u)); margin: 0 auto; }
-  .issue-subtitle img { width: calc(24 * var(--u)); }
+  .issue-subtitle img { width: calc(30 * var(--u)); }
   .issue-copy         { font-size: calc(1.55 * var(--u)); text-align: left; }
+
+  .issue-footer-note {
+    margin-top: 0;
+    margin-left: calc(-3 * var(--u));
+    margin-right: calc(-3 * var(--u));
+    padding-top: calc(2.2 * var(--u));
+    padding-left: calc(3 * var(--u));
+    padding-right: calc(3 * var(--u));
+    border-top: none;
+  }
 
   .issue-footer-note p { font-size: calc(1.55 * var(--u)); }
 

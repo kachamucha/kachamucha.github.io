@@ -27,6 +27,12 @@ ScrollTrigger.defaults({ anticipatePin: 1 });
 // refresh mid-animation, which breaks pin positions.
 ScrollTrigger.config({ ignoreMobileResize: true });
 
+// Captured before Lenis or anything else touches scroll: on a browser-back
+// navigation the browser restores window.scrollY to the history entry's
+// saved position before any script runs. Re-applied once ScrollTrigger has
+// its final pin geometry (see below) so the restored spot survives.
+const restoredScrollY = window.scrollY;
+
 const lenis = initScroll();
 initPageTransition();
 const nav = initNav(lenis);
@@ -63,13 +69,28 @@ document.fonts.ready.then(() => {
 
   // Refresh again once images have loaded so ScrollTrigger trigger points
   // reflect the final laid-out page height (images can shift element offsets).
+  const restoreScroll = () => {
+    // A hash in the URL wins (scrollToInitialHash jumps there); otherwise
+    // put the page back where a back/forward navigation left it, now that
+    // ScrollTrigger's pins have their final geometry.
+    if (location.hash) {
+      nav.scrollToInitialHash();
+    } else if (restoredScrollY > 0) {
+      if (lenis) {
+        lenis.scrollTo(restoredScrollY, { immediate: true });
+      } else {
+        window.scrollTo({ top: restoredScrollY, behavior: 'auto' });
+      }
+    }
+  };
+
   if (document.readyState === 'complete') {
     ScrollTrigger.refresh();
-    nav.scrollToInitialHash();
+    restoreScroll();
   } else {
     window.addEventListener('load', () => {
       ScrollTrigger.refresh();
-      nav.scrollToInitialHash();
+      restoreScroll();
     });
   }
 });

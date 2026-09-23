@@ -1195,107 +1195,67 @@ body:has(#report) {
 .befizuli-body {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: clamp(2.5rem, 6vw, 6rem);
+  gap: clamp(2.5rem, 5vh, 4rem);
   padding: clamp(3rem, 8vh, 6rem) clamp(2rem, 6vw, 5rem);
 }
 
-.befizuli-cover {
-  flex: 0 0 auto;
-  width: clamp(12rem, 18vw, 18rem);
-  transform: translateX(20%);
-}
-
-.befizuli-cover {
-  position: relative;
-}
-
-/* the starburst sits behind the cover, as on the shop slide */
-.befizuli-star {
-  display: none;   /* mobile reference only — see the phone block below */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 178%;
-  height: auto;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-}
-
-@keyframes befizuliStarSpin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.befizuli-cover-art {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: auto;
-  display: block;
-  transform: rotate(-8deg);
-}
-
-.befizuli-cta-alt {
-  display: none;   /* mobile reference only */
-}
-
-.befizuli-actions {
+.befizuli-groups {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: center;
-  gap: clamp(1rem, 2.4vw, 2rem);
+  gap: clamp(2.5rem, 6vw, 6rem);
 }
 
-.befizuli-content {
-  flex: 0 1 auto;
+.befizuli-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1.6rem, 3.4vh, 2.6rem);
-  margin-left: auto;
-  margin-right: clamp(1rem, 6vw, 5rem);
-  max-width: 42rem;
-  transform: translateX(-30%);
+  gap: clamp(1.4rem, 2.6vw, 2.2rem);
+  text-decoration: none;
 }
 
-/* .befizuli-cover's translateX(20%) and .befizuli-content's translateX(-30%)
-   pull the two together for a tighter, layered composition — but both are a
-   percentage of the element's OWN size, not of the space between them, so
-   on any window narrower than roughly 1000px they close that gap entirely
-   and the cover starts printing over the title. Neutral above the point
-   where the two intentionally overlap; below it, plain flex spacing takes
-   over instead. Distinct from the 720px breakpoint below, which is a full
-   phone redesign, not a spacing fix. */
-@media (max-width: 1000px) {
-  .befizuli-cover,
-  .befizuli-content {
-    transform: none;
-  }
-}
-
-.befizuli-title {
-  width: clamp(20rem, 44vw, 38rem);
+.befizuli-group-covers {
+  width: clamp(16rem, 26vw, 22rem);
   height: auto;
   display: block;
+  transition: scale 220ms ease;
 }
 
-.befizuli-cta {
-  display: inline-flex;
-  transition: translate 160ms ease, box-shadow 160ms ease, scale 100ms ease;
-  align-items: center;
-  justify-content: center;
-  background: var(--kmk-yellow);
-  color: var(--kmk-ink);
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-  padding: 0.85rem 2.4rem;
-  border-radius: 999px;
-  text-decoration: none;
-  white-space: nowrap;
+.befizuli-group:hover .befizuli-group-covers,
+.befizuli-group:focus-visible .befizuli-group-covers {
+  scale: 1.03;
+}
+
+.befizuli-group-label {
+  display: block;
+  width: clamp(10rem, 15vw, 13rem);
+  height: auto;
+}
+
+.befizuli-group:focus-visible {
+  outline: 3px solid var(--kmk-yellow);
+  outline-offset: 0.4rem;
+  border-radius: 1.5rem;
+}
+
+.befizuli-about-cta {
+  display: block;
+  width: min(100%, 34rem);
+  transition: scale 100ms ease;
+}
+
+.befizuli-about-cta img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.befizuli-about-cta:hover,
+.befizuli-about-cta:focus-visible {
+  scale: 1.02;
 }
 
 /* each star is interactive: the two upcoming issues announce themselves,
@@ -1908,60 +1868,20 @@ body:has(#report) {
   }
 
   .befizuli-body {
-    flex-direction: column;
-    align-items: center;
-    gap: 6dvh;
-    padding: 6dvh 6vw 8dvh;
-  }
-
-  .befizuli-cover {
-    width: 46vw;
-    transform: none;
-  }
-
-  /* the phone reference puts the cover on a starburst and adds a second
-     button beside Get Issue 1 */
-  .befizuli-star {
-    display: block;
-    width: 68vw;
-    max-width: none;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .befizuli-star {
-      animation: befizuliStarSpin 44s linear infinite;
-    }
-  }
-
-  .befizuli-cta-alt {
-    display: inline-flex;
-  }
-
-  .befizuli-actions {
-    gap: 3vw;
-    width: 100%;
-  }
-
-  .befizuli-cta {
-    flex: 0 1 auto;
-    font-size: 1rem;
-    padding: 0.7rem 1rem;
-  }
-
-  .befizuli-content {
-    margin: 0;
-    transform: none;
-    align-items: center;
     gap: 4dvh;
+    padding: 4dvh 6vw 6dvh;
   }
 
-  .befizuli-title {
-    width: 84vw;
+  .befizuli-groups {
+    gap: 6vw;
   }
 
-  .befizuli-cta {
-    font-size: 1.15rem;
-    padding: 0.7rem 2rem;
+  .befizuli-group-covers {
+    width: 40vw;
+  }
+
+  .befizuli-group-label {
+    width: 34vw;
   }
 
   /* ---------- 8. FOOTER -------------------------------------------------- */

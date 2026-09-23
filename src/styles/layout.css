@@ -1430,12 +1430,14 @@ body:has(#report) {
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 12dvh;
   }
 
   .hero-statement {
     flex: 0 0 auto;
     min-height: 0;
-    padding: 4dvh 0 0;
+    padding: 2dvh 0 0;
     align-items: flex-start;
   }
 
@@ -1454,9 +1456,9 @@ body:has(#report) {
   }
 
   .hero-scene {
-    flex: 1 1 auto;
-    height: auto;
-    min-height: 46dvh;
+    flex: 0 0 auto;
+    height: 40dvh;
+    min-height: 40dvh;
   }
 
   /* Pre-stage the arm for mobile so it never flashes in its desktop position

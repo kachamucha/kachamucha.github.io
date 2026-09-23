@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MOTION_OK, MOTION_REDUCED } from '../lib/reducedMotion';
 
-const SECTION_SELECTOR = '#section3';
+const SECTION_SELECTOR = '#case-file';
 const CARD_SELECTOR = '.s3-card';
 const LIGHTBOX_SELECTOR = '.s3-lightbox';
 const LIGHTBOX_IMG_SELECTOR = '.s3-lightbox-img';

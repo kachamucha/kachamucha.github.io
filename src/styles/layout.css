@@ -6,7 +6,7 @@ body:has(#report) {
 }
 
 /* ---------- act one: one continuous red bulb behind slides 1-3 ----------
-   #hero (strike + verdict) and #section3 (report) are wrapped in .act-one so a
+   #hero (strike + verdict) and #case-file (report) are wrapped in .act-one so a
    single red bulb per side can span all three slides, instead of six separate
    placements. The slides themselves are transparent; act-one carries the black
    base and the bulb sits behind their content. */

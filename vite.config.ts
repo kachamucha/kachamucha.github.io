@@ -18,8 +18,8 @@ export default defineConfig(() => ({
       input: {
         main: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
-        issue1: resolve(__dirname, 'issue-01.html'),
-        issue2: resolve(__dirname, 'issue-02.html'),
+        shopSenior: resolve(__dirname, 'shop-senior.html'),
+        shopJunior: resolve(__dirname, 'shop-junior.html'),
         cart: resolve(__dirname, 'cart.html')
       }
     }

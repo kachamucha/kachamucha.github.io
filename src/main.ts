@@ -41,12 +41,12 @@ const nav = initNav(lenis);
    payoff of the narrative and holds still on purpose. */
 const sections: Record<string, (el: HTMLElement) => void> = {
   hero,
-  section3: () => initSection3(),
+  'case-file': () => initSection3(),
   closing: () => initClosing(),
   reincarnation: () => initReincarnation(),
   ouija: () => initOuija(),
   mosaic: () => initMosaic(),
-  befizuli: () => initBefizuli()
+  shop: () => initBefizuli()
 };
 
 // Wait for custom fonts before initialising scroll animations.

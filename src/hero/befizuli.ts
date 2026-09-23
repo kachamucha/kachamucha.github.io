@@ -6,7 +6,7 @@ import { MOTION_OK_DESKTOP, MOTION_STATIC } from '../lib/reducedMotion';
    only hard sell on the page, so it assembles itself as you arrive: the
    awning drops in, the cover swings onto it, then the title and the CTA. */
 
-const SECTION_SELECTOR = '#befizuli';
+const SECTION_SELECTOR = '#shop';
 
 const CONFIG = {
   awningDropPx: -60,

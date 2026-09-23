@@ -130,47 +130,14 @@ body:has(.issue-page) {
 .issue-themes {
   display: flex;
   flex-direction: column;
-  gap: calc(1.2 * var(--u));
 }
 
-.issue-themes-title,
-.issue-tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  padding: 0.12em 0.62em;
-  line-height: 1.25;
-  text-align: center;
+.issue-themes-img {
+  display: block;
+  width: 100%;
+  max-width: calc(38 * var(--u));
+  height: auto;
 }
-
-.issue-themes-title {
-  margin: 0;
-  background: var(--kmk-yellow);
-  color: var(--kmk-red);
-  font-weight: 800;
-  font-size: calc(1.75 * var(--u));
-}
-
-.issue-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(1.4 * var(--u)) calc(0.75 * var(--u));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.issue-tag {
-  font-weight: 400;
-  font-size: calc(1.75 * var(--u));
-  color: var(--kmk-ink);
-}
-
-.issue-tag-yellow { background: var(--kmk-yellow); }
-.issue-tag-green  { background: var(--tag-green); }
-.issue-tag-blue   { background: var(--tag-blue); }
-.issue-tag-orange { background: var(--tag-orange); }
 
 /* ---------- copy ---------- */
 .issue-intro {
@@ -370,13 +337,8 @@ body:has(.issue-page) {
   .issue-cover-star { width: calc(26 * var(--u)); }
   .issue-cover-art  { width: calc(14.5 * var(--u)); }
 
-  .issue-themes-title,
-  .issue-tag {
-    font-size: calc(1.65 * var(--u));
-  }
-
-  .issue-tags {
-    gap: calc(0.9 * var(--u)) calc(0.7 * var(--u));
+  .issue-themes-img {
+    max-width: 100%;
   }
 
   .issue-heading-text { width: calc(28 * var(--u)); margin: 0 auto; }

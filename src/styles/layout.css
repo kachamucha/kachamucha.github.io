@@ -756,6 +756,12 @@ body:has(#report) {
   overflow: hidden;
 }
 
+/* the composition itself; the phone tilts it inside the field's straight clip */
+.mosaic-comp {
+  position: absolute;
+  inset: 0;
+}
+
 /* stickers cluster in the top-left corner, over the spreads */
 .mosaic-sticker-warning {
   top: 1.97vw;
@@ -1343,9 +1349,9 @@ body:has(#report) {
        sticker cluster tucks in just below the diagonal band, and the tilted
        magazine spreads cascade down the red beneath the cluster — all on the
        SAME coordinate space (formerly the separate #shop-2 slide). The canvas
-       ends where the book field does (see .mosaic-field) plus the 22vw the
-       next slide's awning drapes over, so the last row sits above the awning. */
-    min-height: calc(49dvh + 3px + 117vw);
+       ends at the foot of the book field (70dvh + 159vw) so the yellow/black
+       awning on the next slide can drape over that edge. */
+    min-height: calc(70dvh + 159vw);
   }
 
   .shop-stage {
@@ -1425,7 +1431,7 @@ body:has(#report) {
   /* ---------- 6. MOSAIC --------------------------------------------------
      The phone runs the same drifting diagonal rows as desktop. Every tile
      position and loop offset is in vw, so the composition carries over
-     unchanged; the field is anchored to the eye band instead. */
+     whole; the phone only tilts and scales it (see .mosaic-comp). */
   .shop-mosaic {
     /* Merged into the shop canvas: pinned over the whole slide (inset:0) so the
        stickers share one coordinate space with the covers, eye and band above
@@ -1446,16 +1452,25 @@ body:has(#report) {
     z-index: 3;
   }
 
-  /* The field's top edge follows the eye band's centre line, so the books
-     emerge from under the band across the whole width and the composition's
-     empty top-left corner (the stickers' spot on desktop) sits behind the
-     sticker cluster. The band is centred at (50vw, 49dvh + 3px) at 43°, so
-     its centre line drops tan(43°) × 50vw = 46.63vw either side of centre:
-     the field starts at the left end of that line and the clip slopes down
-     93.26vw across the width. */
+  /* The field starts just below the sticker cluster and runs to the foot of
+     the slide, where the next slide's awning drapes over it. */
   .mosaic-field {
-    top: calc(49dvh + 3px - 46.63vw);
-    clip-path: polygon(0 0, 100% 93.26vw, 100% 100%, 0 100%);
+    top: 70dvh;
+  }
+
+  /* The phone arrangement is the desktop composition tilted 16° steeper and
+     scaled up 1.138x, so the books run down the screen in a denser zigzag
+     (fitted against the phone art-direction reference). Tilting the whole
+     composition keeps each row's loop seamless, since the rows still travel
+     along their own diagonals inside it. */
+  .mosaic-comp {
+    inset: auto;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 141.6vw;
+    transform-origin: 0 0;
+    transform: translate(-28.5vw, 9.27vw) rotate(-16deg) scale(1.138);
   }
 
 

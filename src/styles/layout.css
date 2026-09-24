@@ -748,9 +748,12 @@ body:has(#report) {
   filter: drop-shadow(0 0.5rem 1.1rem rgba(0, 0, 0, 0.35));
 }
 
-/* phone-only flat collage: hidden on desktop, shown in the mobile block */
-.mosaic-flat {
-  display: none;
+/* the rows' coordinate space and clip box; the stickers sit outside it so
+   they are never clipped */
+.mosaic-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
 
 /* stickers cluster in the top-left corner, over the spreads */
@@ -1416,16 +1419,9 @@ body:has(#report) {
   }
 
   /* ---------- 6. MOSAIC --------------------------------------------------
-     The books keep their diagonals but the frame is far narrower, so the
-     whole composition scales up relative to the screen and runs longer. */
-  /* ---------- 6b. MOSAIC: phone cascade ---------------------------------
-     The desktop composition is a wide diagonal field; at 390px it collapses
-     to thumbnails. The phone keeps the same diagonal *rule* with its own
-     parameters: books 62vw wide stepping (-30, +34)vw, so they
-     zigzag down the screen and bleed off both edges.
-
-     The loop distance and clone offset are three steps of that phone step,
-     not the desktop one, or the rows would not close seamlessly. */
+     The phone runs the same drifting diagonal rows as desktop. Every tile
+     position and loop offset is in vw, so the composition carries over
+     unchanged; only the field moves, down below the sticker cluster. */
   .shop-mosaic {
     /* Merged into the shop canvas: pinned over the whole slide (inset:0) so the
        stickers share one coordinate space with the covers, eye and band above
@@ -1446,119 +1442,10 @@ body:has(#report) {
     z-index: 4;
   }
 
-  /* PHONE: a single flat collage image (.mosaic-flat = /img/Layer-21.webp) now
-     carries the whole spread composition, so the individual spread tiles are
-     hidden here. The 5 sticker decals on the left stay. To bring the live
-     spreads back, restore the rows to: display:block; animation:none;
-     translate:none; transform:translateY(calc(43dvh + 88vw)). */
-  .shop-mosaic .mosaic-row {
-    display: none;
-  }
-
-  .mosaic-flat {
-    display: block;
-    position: absolute;
+  /* the field starts where the sticker cluster ends and runs to the foot of
+     the slide, where the next slide's awning drapes over it */
+  .mosaic-field {
     top: 70dvh;
-    left: 0;
-    width: 100vw;
-    height: auto;
-    z-index: 3;
-  }
-
-  .shop-mosaic .mosaic-set-clone {
-    display: none;
-  }
-
-  .mosaic-row-up .mosaic-set-clone {
-    transform: translate(-90vw, 102vw);
-  }
-
-  .mosaic-row-down .mosaic-set-clone {
-    transform: translate(90vw, -102vw);
-  }
-
-  @keyframes mosaicDriftUp {
-    from { transform: translate(0, 0); }
-    to   { transform: translate(90vw, -102vw); }
-  }
-
-  @keyframes mosaicDriftDown {
-    from { transform: translate(0, 0); }
-    to   { transform: translate(-90vw, 102vw); }
-  }
-
-  .mosaic-row-pair.mosaic-row-down .mosaic-set-clone {
-    transform: translate(60vw, -68vw);
-  }
-
-  @keyframes mosaicDriftDownPair {
-    from { transform: translate(0, 0); }
-    to   { transform: translate(-60vw, 68vw); }
-  }
-
-  .mosaic-spread-3 {
-    top: 7.79vw;
-    left: 17.77vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-2 {
-    top: 41.79vw;
-    left: -12.23vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-1 {
-    top: 75.79vw;
-    left: -42.23vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-6 {
-    top: 87.79vw;
-    left: 27.26vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-5 {
-    top: 121.79vw;
-    left: -2.74vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-7 {
-    top: 155.79vw;
-    left: -32.74vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-8 {
-    top: 167.79vw;
-    left: 31.26vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-10 {
-    top: 201.79vw;
-    left: 1.26vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-4 {
-    top: 235.79vw;
-    left: -28.74vw;
-    width: 83.22vw;
-  }
-  .mosaic-spread-11 {
-    top: 247.79vw;
-    left: 35.26vw;
-    width: 83.22vw;
-  }
-
-  .mosaic-spread-9 {
-    top: 281.79vw;
-    left: 5.26vw;
-    width: 83.22vw;
   }
 
 

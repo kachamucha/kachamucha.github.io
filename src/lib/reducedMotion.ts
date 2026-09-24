@@ -1,10 +1,11 @@
 export const MOTION_OK = '(prefers-reduced-motion: no-preference)';
 export const MOTION_REDUCED = '(prefers-reduced-motion: reduce)';
 
-/* Phone slides (shop, befizuli) hold still on purpose: only the CSS star
-   spins are allowed to move there. These pair a desktop-only "animate" query
-   with a "static" query that also catches every phone, so a section's
-   entrance timeline never runs at <=720px regardless of motion preference. */
+/* Phone slides skip their JS entrance timelines on purpose: only CSS loops
+   (the star spins, the mosaic's drifting book rows) move there. These pair a
+   desktop-only "animate" query with a "static" query that also catches every
+   phone, so a section's entrance timeline never runs at <=720px regardless of
+   motion preference. */
 export const MOTION_OK_DESKTOP = '(prefers-reduced-motion: no-preference) and (min-width: 721px)';
 export const MOTION_STATIC = '(prefers-reduced-motion: reduce), (max-width: 720px)';
 

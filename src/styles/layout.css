@@ -1343,9 +1343,9 @@ body:has(#report) {
        sticker cluster tucks in just below the diagonal band, and the tilted
        magazine spreads cascade down the red beneath the cluster — all on the
        SAME coordinate space (formerly the separate #shop-2 slide). The canvas
-       ends right at the bottom of the flat collage (top 70dvh + 158vw tall)
-       so the yellow/black awning on the next slide can drape over that edge. */
-    min-height: calc(70dvh + 159vw);
+       ends where the book field does (see .mosaic-field) plus the 22vw the
+       next slide's awning drapes over, so the last row sits above the awning. */
+    min-height: calc(49dvh + 3px + 117vw);
   }
 
   .shop-stage {
@@ -1406,6 +1406,9 @@ body:has(#report) {
     width: 220%;
     height: clamp(3.84rem, 7.2vh, 5.12rem);
     transform: translate(-50%, -50%) rotate(43deg);
+    /* over the mosaic (z 3) so the books slide out from under the band,
+       still under the covers and eye (z 5) */
+    z-index: 4;
   }
 
   .shop-yellow-box-bottom-eyes {
@@ -1416,12 +1419,13 @@ body:has(#report) {
     height: clamp(3.84rem, 7.2vh, 5.12rem);
     --eye-tile-size: clamp(3.07rem, 5.28vw, 4.42rem);
     transform: translate(-50%, -50%) rotate(43deg);
+    z-index: 4;
   }
 
   /* ---------- 6. MOSAIC --------------------------------------------------
      The phone runs the same drifting diagonal rows as desktop. Every tile
      position and loop offset is in vw, so the composition carries over
-     unchanged; only the field moves, down below the sticker cluster. */
+     unchanged; the field is anchored to the eye band instead. */
   .shop-mosaic {
     /* Merged into the shop canvas: pinned over the whole slide (inset:0) so the
        stickers share one coordinate space with the covers, eye and band above
@@ -1439,13 +1443,19 @@ body:has(#report) {
        visible is the one mixed combo CSS allows without forcing auto. */
     overflow-x: clip;
     overflow-y: visible;
-    z-index: 4;
+    z-index: 3;
   }
 
-  /* the field starts where the sticker cluster ends and runs to the foot of
-     the slide, where the next slide's awning drapes over it */
+  /* The field's top edge follows the eye band's centre line, so the books
+     emerge from under the band across the whole width and the composition's
+     empty top-left corner (the stickers' spot on desktop) sits behind the
+     sticker cluster. The band is centred at (50vw, 49dvh + 3px) at 43°, so
+     its centre line drops tan(43°) × 50vw = 46.63vw either side of centre:
+     the field starts at the left end of that line and the clip slopes down
+     93.26vw across the width. */
   .mosaic-field {
-    top: 70dvh;
+    top: calc(49dvh + 3px - 46.63vw);
+    clip-path: polygon(0 0, 100% 93.26vw, 100% 100%, 0 100%);
   }
 
 

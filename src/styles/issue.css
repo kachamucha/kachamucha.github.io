@@ -347,12 +347,14 @@ body:has(.issue-page) {
     border-bottom: 2px solid var(--kmk-ink);
   }
 
+  /* the box stays a few units taller than the star so its spinning points
+     never reach the divider line below */
   .issue-cover {
-    min-height: calc(30 * var(--u));
+    min-height: calc(40 * var(--u));
   }
 
-  .issue-cover-star { width: calc(24 * var(--u)); }
-  .issue-cover-art  { width: calc(13.5 * var(--u)); }
+  .issue-cover-star { width: calc(34 * var(--u)); }
+  .issue-cover-art  { width: calc(20 * var(--u)); }
 
   .issue-themes-img {
     max-width: 100%;

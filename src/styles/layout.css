@@ -1452,10 +1452,15 @@ body:has(#report) {
     z-index: 3;
   }
 
-  /* The field starts just below the sticker cluster and runs to the foot of
-     the slide, where the next slide's awning drapes over it. */
+  /* The field's top edge follows the eye band's centre line instead of a
+     flat horizontal cut, so books drift out from under the band rather than
+     being sliced off mid-page. The band is centred at (50vw, 49dvh + 3px) at
+     43°, so its centre line drops tan(43°) × 50vw = 46.63vw either side of
+     centre: the field starts at the left end of that line and the clip
+     slopes down 93.26vw across the width. */
   .mosaic-field {
-    top: 70dvh;
+    top: calc(49dvh + 3px - 46.63vw);
+    clip-path: polygon(0 0, 100% 93.26vw, 100% 100%, 0 100%);
   }
 
   /* The phone arrangement is the desktop composition tilted 16° steeper and
@@ -1465,7 +1470,9 @@ body:has(#report) {
      along their own diagonals inside it. */
   .mosaic-comp {
     inset: auto;
-    top: 0;
+    /* keeps the books where the reference puts them (field top at 70dvh),
+       whatever the field's own top is */
+    top: calc(21dvh - 3px + 46.63vw);
     left: 0;
     width: 100vw;
     height: 141.6vw;

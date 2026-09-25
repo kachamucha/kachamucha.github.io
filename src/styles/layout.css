@@ -1492,11 +1492,11 @@ body:has(#report) {
      Rotations follow the reference: the whole cluster leans counter-clockwise
      (left edge down, right edge up) so the decals fan across the red beneath
      the band, with the parental advisory tilted hardest. */
-  .mosaic-sticker-caution   { top: calc(43dvh + 1vw - 2px);  left: 5vw;  width: 19vw; transform: rotate(-16deg); }
-  .mosaic-sticker-parental  { top: calc(43dvh + 15vw); left: 6vw;  width: 32vw; transform: rotate(-50deg); }
-  .mosaic-sticker-care      { top: calc(43dvh + 30vw); left: 26vw; width: 33vw; transform: rotate(35deg); }
-  .mosaic-sticker-warning   { top: calc(43dvh + 52vw - 2px); left: 6vw;  width: 37vw; transform: rotate(-30deg); }
-  .mosaic-sticker-caution-2 { top: calc(43dvh + 78vw - 2px); left: 5vw;  width: 20vw; transform: rotate(-36deg); display: block; z-index: 2; }
+  .mosaic-sticker-caution   { top: calc(43dvh + 1.1vw - 2px);  left: 5vw;    width: 20.9vw; transform: rotate(-16deg); }
+  .mosaic-sticker-parental  { top: calc(43dvh + 16.5vw);       left: 6.1vw;  width: 35.2vw; transform: rotate(-50deg); }
+  .mosaic-sticker-care      { top: calc(43dvh + 33vw);         left: 28.1vw; width: 36.3vw; transform: rotate(35deg); }
+  .mosaic-sticker-warning   { top: calc(43dvh + 57.2vw - 2px); left: 6.1vw;  width: 40.7vw; transform: rotate(-30deg); }
+  .mosaic-sticker-caution-2 { top: calc(43dvh + 85.8vw - 2px); left: 5vw;    width: 22vw;   transform: rotate(-36deg); display: block; z-index: 2; }
 
   /* ---------- 7. BEFUZULI ------------------------------------------------ */
   /* Let the yellow/black awning rise up out of this slide and hang OVER the

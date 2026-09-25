@@ -350,11 +350,11 @@ body:has(.issue-page) {
   /* the box stays a few units taller than the star so its spinning points
      never reach the divider line below */
   .issue-cover {
-    min-height: calc(40 * var(--u));
+    min-height: calc(43 * var(--u));
   }
 
-  .issue-cover-star { width: calc(34 * var(--u)); }
-  .issue-cover-art  { width: calc(20 * var(--u)); }
+  .issue-cover-star { width: calc(36.2 * var(--u)); }
+  .issue-cover-art  { width: calc(21.3 * var(--u)); }
 
   .issue-themes-img {
     max-width: 100%;

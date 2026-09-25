@@ -15,14 +15,20 @@ export function initScroll(): Lenis | null {
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
   const lenis = new Lenis({ lerp: isTouch ? 1 : 0.11 });
 
-  /* Publish scroll velocity as a plain number on :root. The mosaic rows use
-     it to lean into the scroll, which costs nothing and makes the slide feel
-     attached to the page rather than playing beside it. */
+  /* Publish scroll velocity for the mosaic rows to lean into the scroll.
+     Set on the mosaic itself, not :root: a custom property on the root
+     restyles the whole document every scroll frame. Skipped on touch, where
+     velocity comes from noisy touch deltas and the lean read as jitter. */
   const MAX_V = 40;
+  const leanTarget = isTouch ? null : document.querySelector<HTMLElement>('.shop-mosaic');
+  let lastV = '';
   lenis.on('scroll', ({ velocity }: { velocity: number }) => {
     ScrollTrigger.update();
-    const v = Math.max(-MAX_V, Math.min(MAX_V, velocity || 0));
-    document.documentElement.style.setProperty('--scroll-v', v.toFixed(2));
+    if (!leanTarget) return;
+    const v = Math.max(-MAX_V, Math.min(MAX_V, velocity || 0)).toFixed(1);
+    if (v === lastV) return;
+    lastV = v;
+    leanTarget.style.setProperty('--scroll-v', v);
   });
 
   gsap.ticker.add((time) => {

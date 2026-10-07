@@ -553,35 +553,35 @@ body:has(#report) {
   overflow: hidden;
 }
 
-/* the sunburst lives on its own rotating layer so it can spin behind the
-   title without dragging the text along with it. Oversized so the corners
-   never reveal empty space while rotating; "contain" keeps the whole image
-   intact instead of cropping it, and the red fallback fill blends any
-   letterboxed edge seamlessly into the brand red backdrop. */
+/* the swirl lives on its own rotating layer so it can spin behind the
+   title without dragging the text along with it. */
 .brand-hero::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
+  /* square, 1.5x the band's width: always wider than the band's diagonal, so
+     no corner shows at any rotation. The art is cropped square around the
+     swirl's centre, so it spins on that centre without wobbling. */
   width: 150%;
-  height: 150%;
+  aspect-ratio: 1;
   background-color: var(--kmk-red);
   background-image: url('/img/sunburst-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transform: translate(-50%, -50%) scale(4.2);
+  transform: translate(-50%, -50%);
   z-index: 0;
   pointer-events: none;
 }
 
 @keyframes brandSunburstSpin {
   from {
-    transform: translate(-50%, -50%) rotate(0deg) scale(4.2);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
 
   to {
-    transform: translate(-50%, -50%) rotate(-360deg) scale(4.2);
+    transform: translate(-50%, -50%) rotate(-360deg);
   }
 }
 
